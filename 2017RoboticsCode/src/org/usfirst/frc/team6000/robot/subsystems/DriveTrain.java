@@ -1,6 +1,8 @@
 package org.usfirst.frc.team6000.robot.subsystems;
 
 import org.usfirst.frc.team6000.robot.OI;
+import org.usfirst.frc.team6000.robot.RobotMap;
+import org.usfirst.frc.team6000.robot.commands.TankDrive;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,6 +30,9 @@ public class DriveTrain extends Subsystem {
 	RobotDrive robotDrive = new RobotDrive(leftMotor, rightMotor);
 
 	public DriveTrain() {
+		RobotMap robotMap = new RobotMap();
+
+		
 		leftWheelEncoder.setMaxPeriod(0.1);
 		leftWheelEncoder.setMinRate(10);
 		leftWheelEncoder.setDistancePerPulse(18.85 / 360);
@@ -116,5 +121,6 @@ public class DriveTrain extends Subsystem {
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.
 		// setDefaultCommand(new MySpecialCommand());
+		setDefaultCommand(new TankDrive());
 	}
 }

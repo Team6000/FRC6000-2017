@@ -1,7 +1,10 @@
 package org.usfirst.frc.team6000.robot;
 
+import org.usfirst.frc.team6000.robot.commands.Shoot;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -16,6 +19,8 @@ public class OI {
     // Button button = new JoystickButton(stick, buttonNumber);
 	public static Joystick leftStick = new Joystick(0);
 	public static Joystick rightStick = new Joystick(1);
+	public static Button shootButton = new JoystickButton(rightStick, 2);
+	
 
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
@@ -36,5 +41,8 @@ public class OI {
     // Start the command when the button is released  and let it run the command
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
+	public OI(){
+		shootButton.whileHeld(new Shoot());
+	}
 }
 
