@@ -1,27 +1,26 @@
 package org.usfirst.frc.team6000.robot.commands;
 
+import org.omg.PortableInterceptor.ObjectIdHelper;
+import org.usfirst.frc.team6000.robot.OI;
 import org.usfirst.frc.team6000.robot.Robot;
-import org.usfirst.frc.team6000.robot.subsystems.Shooter;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
+public class TankDrive extends Command {
+	
+	Joystick leftStick = OI.leftStick;
+    Joystick rightStick = OI.rightStick;
+	
 
-/* Shoot Instructions:
- * 
- * Set shooter elevation
- * Set wheel speed (to 0.6)
- * Feed balls into shooter
- */
-
-public class Shoot extends Command {
-
-    public Shoot() {
+    public TankDrive() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.shooter);
+    	requires(Robot.driveTrain);
     }
 
     // Called just before this Command runs the first time
@@ -30,7 +29,7 @@ public class Shoot extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.shooter.spinShooterWheel();
+    Robot.driveTrain.tankDrive(leftStick, rightStick);
     }
 
     // Make this return true when this Command no longer needs to run execute()
