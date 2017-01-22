@@ -8,6 +8,14 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
+
+/* Shoot Instructions:
+ * 
+ * Set shooter elevation
+ * Set wheel speed (to 0.6)
+ * Feed balls into shooter
+ */
+
 public class Shoot extends Command {
 
     public Shoot() {
