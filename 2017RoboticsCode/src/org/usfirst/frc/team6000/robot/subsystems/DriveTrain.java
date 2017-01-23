@@ -7,6 +7,7 @@ import org.usfirst.frc.team6000.robot.commands.TankDrive;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import jaci.pathfinder.Pathfinder;
@@ -23,8 +24,8 @@ public class DriveTrain extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
-	Victor leftMotor;
-	Victor rightMotor;
+	Spark leftMotor;
+	Spark rightMotor;
 	private Encoder leftWheelEncoder;
 	private Encoder rightWheelEncoder;
 	RobotDrive robotDrive = new RobotDrive(leftMotor, rightMotor);
@@ -88,8 +89,8 @@ public class DriveTrain extends Subsystem {
 		// 'getEncPosition' function. WE DONT KNOW WHAT THIS MEANS!!!!
 		// 1000 is the amount of encoder ticks per full revolution
 		// Wheel Diameter is the diameter of your wheels (or pulley for a track system) in meters
-		leftEncoderFollower.configureEncoder((int) leftWheelEncoder.getDistance(), 1440, .1524);
-		rightEncoderFollower.configureEncoder((int) rightWheelEncoder.getDistance(), 1440, .1524);
+		leftEncoderFollower.configureEncoder((int) leftWheelEncoder.get(), 1440, .1524);
+		rightEncoderFollower.configureEncoder((int) rightWheelEncoder.get(), 1440, .1524);
 
 		// The first argument is the proportional gain. Usually this will be quite high
 		// The second argument is the integral gain. This is unused for motion profiling
@@ -100,9 +101,9 @@ public class DriveTrain extends Subsystem {
 		leftEncoderFollower.configurePIDVA(1.0, 0.0, 0.0, 1 / 4.27, 0);
 		rightEncoderFollower.configurePIDVA(1.0, 0.0, 0.0, 1 / 4.27, 0);
 		
-		double leftOutput = leftEncoderFollower.calculate((int) leftWheelEncoder.getDistance()); 
+		double leftOutput = leftEncoderFollower.calculate((int) leftWheelEncoder.get()); 
 		//Supoosed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
-		double rightOutput = rightEncoderFollower.calculate((int) rightWheelEncoder.getDistance());
+		double rightOutput = rightEncoderFollower.calculate((int) rightWheelEncoder.get());
 		//Supoosed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
 
 		        double gyroHeading = (Double) null;//FIND GYRO HEADING USING GYROSCOPE
