@@ -1,15 +1,17 @@
+package org.usfirst.frc.team6000.robot.commands;
+
+
+import org.usfirst.frc.team6000.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AimShooterLow {
+public class AimShooterLow extends Command{
 
-	public class Shoot extends Command {
-
-	    public Aim() {
-	        // Use requires() here to declare subsystem dependencies
-	        // eg. requires(chassis);
-	    	requires(Robot.shooter);
-	    }
+    public AimShooterLow() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	requires(Robot.shooter);
+    }
 
 	    // Called just before this Command runs the first time
 	    protected void initialize() {
@@ -32,6 +34,5 @@ public class AimShooterLow {
 	    // subsystems is scheduled to run
 	    protected void interrupted() {
 	    }
-	}
-	
+
 }

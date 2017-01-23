@@ -1,12 +1,20 @@
+package org.usfirst.frc.team6000.robot.commands;
 
-public class PlaceGear {
+import org.usfirst.frc.team6000.robot.Robot;
 
-	public class Shooter extends Command {
-	
+import edu.wpi.first.wpilibj.command.Command;
+
+public class PlaceGear extends Command{
+
+	public PlaceGear() {
+        // Use requires() here to declare subsystem dependencies
+        // eg. requires(chassis);
+    	requires(Robot.shooter);
+    }
+
 		// Called just before this Command runs the first time
 	    protected void initialize() {
 
-	    }
 	    }
 
 	    // Called repeatedly when this Command is scheduled to run

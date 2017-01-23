@@ -1,11 +1,12 @@
+package org.usfirst.frc.team6000.robot.commands;
+
+import org.usfirst.frc.team6000.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class AimShooterHigh {
+public class AimShooterHigh extends Command{
 
-	public class Shoot extends Command {
-
-	    public Aim() {
+	    public AimShooterHigh() {
 	        // Use requires() here to declare subsystem dependencies
 	        // eg. requires(chassis);
 	    	requires(Robot.shooter);
@@ -32,6 +33,4 @@ public class AimShooterHigh {
 	    // subsystems is scheduled to run
 	    protected void interrupted() {
 	    }
-	}
-	
 }

@@ -25,7 +25,7 @@ public class DriveTrain extends Subsystem {
 
 	Spark leftMotor;
 	Spark rightMotor;
-	Spark Encoder leftWheelEncoder;
+	private Encoder leftWheelEncoder;
 	private Encoder rightWheelEncoder;
 	RobotDrive robotDrive = new RobotDrive(leftMotor, rightMotor);
 
