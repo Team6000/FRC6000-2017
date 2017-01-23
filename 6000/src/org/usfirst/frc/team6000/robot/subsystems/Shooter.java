@@ -28,8 +28,13 @@ public class Shooter extends Subsystem {
 	public void spinShooterWheel(){
 		shooterWheel.set(.6);
 	}
+	
+	public void stopShooterWheel() {
+		shooterWheel.set(0);
+	}
 
     public void initDefaultCommand() {
+    	shooterWheel.set(0);
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
     }

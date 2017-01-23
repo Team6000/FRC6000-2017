@@ -8,7 +8,15 @@ public class GearGrabber extends Subsystem {
 
 	DoubleSolenoid piston = new DoubleSolenoid(1, 1);
 	
-		protected void initDefaultCommand() {
-			
-		}
+	protected void initDefaultCommand() {
+		piston.set(DoubleSolenoid.Value.kReverse);
+	}
+	
+	public void openGrabber() {
+		piston.set(DoubleSolenoid.Value.kForward);
+	}
+	
+	public void closeGrabber() {
+		piston.set(DoubleSolenoid.Value.kReverse);
+	}
 }
