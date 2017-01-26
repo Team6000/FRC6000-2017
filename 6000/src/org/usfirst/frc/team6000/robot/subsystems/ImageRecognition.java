@@ -23,7 +23,9 @@ public class ImageRecognition extends Subsystem {
 	     angRaw = the angle between the viewing angle bisector and the flat wall
 	     angError = the difference between 90 degrees, which is perfect, and the angRaw
 	   To calculate angRaw:
-	     90:angRaw just as 2in:apparent width of retroflective tape
+	     90 degrees : 2in. just as angRaw : apparent width of retroflective tape
+	   To calculate Apparent width of retroflective tape
+	     (FIND FORMULA TO CALCULATE W WHEN ANGRAW IS 90 DEGREES) inches : w in pixels just as apparent width : w in pixels.
 	*/
 	public void checkIfRightAngle(float d) {
 		float w = 0; // in Pixels originally, then convert to inches
