@@ -1,7 +1,6 @@
 package org.usfirst.frc.team6000.robot.commands;
 
 import org.usfirst.frc.team6000.robot.Robot;
-
 import edu.wpi.first.wpilibj.command.Command;
 
 public class PlaceGear extends Command{
