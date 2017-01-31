@@ -1,3 +1,4 @@
+
 package org.usfirst.frc.team6000.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -21,6 +22,12 @@ public class ImageRecognition extends Subsystem {
 	
 	/*
 	  Aligns robot to have to look at the center of tapes.  Essentially you should be staring right at the peg.
+	  angAlign is alpha in the diagram.
+	  w is the pixel distance from the center of the image to the center of the tapes.
+	  d is the width of the image in pixels.
+	  
+	  agnAlign = arctan((w/d)tan(30));
+	  
 	*/
 	public void alignCenter() {
 		
