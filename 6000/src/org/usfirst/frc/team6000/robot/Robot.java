@@ -1,14 +1,17 @@
 
 package org.usfirst.frc.team6000.robot;
 
-import edu.wpi.first.wpilibj.IterativeRobot;
-
-import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.command.Scheduler;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import org.usfirst.frc.team6000.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6000.robot.subsystems.Shooter;
 
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -27,6 +30,7 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser chooser;
+    public static AHRS ahrs;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -37,6 +41,11 @@ public class Robot extends IterativeRobot {
         chooser = new SendableChooser();
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+        try {
+			ahrs =  new AHRS(SPI.Port.kMXP);
+		} catch (RuntimeException ex) {
+			 DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
+		}
     }
 	
 	/**
