@@ -1,7 +1,10 @@
 package org.usfirst.frc.team6000.robot.subsystems;
 
+import org.usfirst.frc.team6000.robot.Robot;
 import org.usfirst.frc.team6000.robot.RobotMap;
 import org.usfirst.frc.team6000.robot.commands.TankDrive;
+
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -18,8 +21,11 @@ public class DriveTrain extends Subsystem {
 	// here. Call these from Commands.
 	
 	RobotDrive robotDrive = new RobotDrive(0, 1);
+	private AHRS gyro;
 
 	public DriveTrain() {		
+		gyro = Robot.ahrs;
+		
 		RobotMap.leftWheelEncoder.setMaxPeriod(0.1);
 		RobotMap.leftWheelEncoder.setMinRate(10);
 		RobotMap.leftWheelEncoder.setDistancePerPulse(18.85 / 360);
@@ -88,11 +94,11 @@ public class DriveTrain extends Subsystem {
 		rightEncoderFollower.configurePIDVA(1.0, 0.0, 0.0, 1 / 4.27, 0);
 		
 		double leftOutput = leftEncoderFollower.calculate((int) RobotMap.leftWheelEncoder.getDistance()); 
-		//Supoosed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
+		//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
 		double rightOutput = rightEncoderFollower.calculate((int) RobotMap.rightWheelEncoder.getDistance());
-		//Supoosed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
+		//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
 
-		        double gyroHeading = (Double) null;//FIND GYRO HEADING USING GYROSCOPE
+		        double gyroHeading = (Double) gyro.getAngle();//FIND GYRO HEADING USING GYROSCOPE
 		        // Assuming the gyro is giving a value in degrees
 				double desiredHeading = Pathfinder.r2d(leftEncoderFollower.getHeading());  // Should also be in degrees
 				double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
