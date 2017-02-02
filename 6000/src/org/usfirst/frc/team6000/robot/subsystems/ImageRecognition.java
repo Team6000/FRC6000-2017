@@ -8,6 +8,9 @@ public class ImageRecognition extends Subsystem {
 	double tapeHeight = 0;
 	double distance = 0;
 	double angAlign = 0;
+	double radius = 0;
+	double centerToTape = 0;
+	double screenWidth = 0;
 	
 	protected void initDefaultCommand() {
 		
@@ -30,7 +33,7 @@ public class ImageRecognition extends Subsystem {
 	*/
 
 	public void alignCenter() {
-		angAlign = Math.atan((w/d)Math.tan(30));
+		angAlign = Math.atan((centerToTape(Math.tan(30)))/((screenWidth/2)+radius(Math.tan(30)));
 	}
 	
 	/* Checks if the robot is at a good enough angle to move straight to put the gear on the peg
