@@ -53,7 +53,23 @@ public class DriveTrain extends Subsystem {
 	public void tankDrive(Joystick leftStick, Joystick rightStick) {
 		robotDrive.tankDrive(leftStick, rightStick);
 	}
-
+	
+	public void rotate(double angle) {
+		
+		double pastError = currentError;
+		double currentError = angle - gyro.pidGet();
+		double sumError += currentError;
+		double slopeError = 0;
+		
+		double kP = 0.04;
+		double kI = 0.00001;
+		double kD = 0;
+		
+		RobotMap.leftMotor.set(kP * currentError + kI * sumError + kD * slopeError);
+		RobotMap.rightMotor.set(-(kP * currentError + kI * sumError + kD * slopeError));
+		
+	}
+	
 	public void pidDrive(Waypoint[] points) {
 //		Waypoint[] points = new Waypoint[] { new Waypoint(-4, -1, Pathfinder.d2r(-45)),  
 //				new Waypoint(-2, -2, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
