@@ -20,19 +20,23 @@ public class ImageRecognition extends Subsystem {
 	// Checks if the camera is looking at the vision targets in the gear peg area
 	public void checkIfGearTarget() {
 		
+		// set all of the variables for the dimensions.  THIS IS FOR YOU NOAH.  GET IT DONE.
 	}
 	
 	/*
 	  Aligns robot to have to look at the center of tapes.  Essentially you should be staring right at the peg.
 	  angAlign is alpha in the diagram.
-	  w is the pixel distance from the center of the image to the center of the tapes.
-	  d is the width of the image in pixels.
+	  centerToTape is the pixel distance from the center of the image to the center of the tapes.
+	  screenWidth is the width of the image in pixels.
 	  30 is half the horizontal viewing angle
-	  agnAlign = arctan((w/d)tan(30));
+	  radius is the distance from the center of the robot to the 
 	*/
 
-	public void alignCenter() {
+	public double alignCenter() {
+		radius = convertToPixels(radius);
 		angAlign = Math.atan((centerToTape*(Math.tan(30)))/((screenWidth/2)+radius*(Math.tan(30))));
+		
+		return angAlign;
 	}
 	
 	/* Checks if the robot is at a good enough angle to move straight to put the gear on the peg
@@ -53,20 +57,20 @@ public class ImageRecognition extends Subsystem {
 		double angRaw = 90.0;
 		double angError = 90 - angRaw;
 		double maxError = 0;
-		
 	}
 	
 	// converts a length in the image from pixels to inches
-
-	public void convertToInches (float pix){
-		// return pixels divided by DPI (dots per inch)
-	}
-
 	public double convertToInches (double pix){
 		double ratio = 0;
 		ratio = tapeHeight/5;
 		
 		return pix * ratio;
+	}
+	public double convertToPixels (double inches){
+		double ratio = 0;
+		ratio = 5/tapeHeight;
+		
+		return inches * ratio;
 	}
 
 }
