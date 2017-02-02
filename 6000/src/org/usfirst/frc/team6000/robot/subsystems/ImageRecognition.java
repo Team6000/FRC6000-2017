@@ -32,7 +32,7 @@ public class ImageRecognition extends Subsystem {
 	*/
 
 	public void alignCenter() {
-		angAlign = Math.atan((centerToTape(Math.tan(30)))/((screenWidth/2)+radius(Math.tan(30)));
+		angAlign = Math.atan((centerToTape*(Math.tan(30)))/((screenWidth/2)+radius*(Math.tan(30))));
 	}
 	
 	/* Checks if the robot is at a good enough angle to move straight to put the gear on the peg
@@ -53,9 +53,6 @@ public class ImageRecognition extends Subsystem {
 		double angRaw = 90.0;
 		double angError = 90 - angRaw;
 		double maxError = 0;
-		double angRaw = 90;
-		double angError = 90 - angRaw;
-		double maxError = 0;
 		
 	}
 	
@@ -63,6 +60,7 @@ public class ImageRecognition extends Subsystem {
 
 	public void convertToInches (float pix){
 		// return pixels divided by DPI (dots per inch)
+	}
 
 	public double convertToInches (double pix){
 		double ratio = 0;
