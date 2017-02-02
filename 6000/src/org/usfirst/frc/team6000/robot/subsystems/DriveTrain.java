@@ -22,6 +22,8 @@ public class DriveTrain extends Subsystem {
 	
 	RobotDrive robotDrive = new RobotDrive(0, 1);
 	private AHRS gyro;
+	double currentError = 0, previousError = 0, sumError = 0, slopeError = 0;
+	
 
 	public DriveTrain() {		
 		gyro = Robot.ahrs;
@@ -56,10 +58,10 @@ public class DriveTrain extends Subsystem {
 	
 	public void rotate(double angle) {
 		
-		double pastError = currentError;
-		double currentError = angle - gyro.pidGet();
-		double sumError += currentError;
-		double slopeError = 0;
+		previousError = currentError;
+		currentError = angle - gyro.pidGet();
+		sumError += currentError;
+		slopeError = currentError - previousError;
 		
 		double kP = 0.04;
 		double kI = 0.00001;
