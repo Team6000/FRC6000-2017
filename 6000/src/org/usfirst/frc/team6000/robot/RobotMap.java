@@ -19,8 +19,8 @@ public class RobotMap {
 	
 	public static Spark leftMotor;
 	public static Spark rightMotor;
-	public static Encoder leftWheelEncoder;
-	public static Encoder rightWheelEncoder;
+	public static Encoder leftWheelEncoder = new Encoder(0, 1);
+	public static Encoder rightWheelEncoder = new Encoder(2, 3);
 	public static DoubleSolenoid piston = new DoubleSolenoid(1, 1);
 	public static Ultrasonic ultra = new Ultrasonic(4, 5);
 	public static Spark intakeWheel;
