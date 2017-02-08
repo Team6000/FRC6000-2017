@@ -16,12 +16,46 @@ public class ImageRecognition extends Subsystem {
 	}
 	
 	// For autonomous
-	
-	// Checks if the camera is looking at the vision targets in the gear peg area
-	public void checkIfGearTarget() {
+	//find distance between two Points
+	private double findDistance(Point pt1, Point pt2){
+		double x1,x2,y1,y2;
+		x1 = pt1.getX();
+		y1 = pt1.getY();
+		x2 = pt2.getX();
+		y2 = pt2.getY();
 		
-		// set all of the variables for the dimensions.  THIS IS FOR YOU NOAH.  GET IT DONE.
+		return Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
 	}
+	
+	// Loads Camera Data and sets variables for the dimensions.
+	public void loadCameraData() {
+		CameraData camera = new CameraData();
+		
+		if (!camera.pointedAtGrip()) return;
+		
+		//TL = Top left
+		//BR = Bottom Right 
+		//etc...
+		Point TL,TR,BL,BR;
+		TL = camera.getTopLeft();
+		TR = camera.getTopRight();
+		BL = camera.getBottomLeft();
+		BR = camera.getBottomRight();
+
+		//center is the center of all the tape
+		Point center = new Point();
+		center.setLocation( (TL.getX()+TR.getX()+BL.getX()+BR.getX() ) / 4, (TL.getY()+TR.getY()+BL.getY()+BR.getY() ) / 4);
+		
+		//screenCenter is center of screen
+		Point screenCenter = new Point();
+		screenCenter.setLocation(camera.CAM_WIDTH()/2,camera.CAM_WIDTH()/2);
+		
+		this.centerToTape = findDistance(center,screenCenter); 
+		this.tapeHeight = (TL.getY() + TR.getY())/2 - (BL.getY() + BR.getY())/2;
+		this.tapeWidth = (TR.getX() + BR.getX())/2 - (TL.getX() + BL.getX())/2;
+
+	}
+
 	
 	/*
 	  Aligns robot to have to look at the center of tapes.  Essentially you should be staring right at the peg.
