@@ -1,6 +1,7 @@
 package org.usfirst.frc.team6000.robot;
 
 import org.usfirst.frc.team6000.robot.commands.Shoot;
+import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -20,7 +21,7 @@ public class OI {
 	public static Joystick leftStick = new Joystick(0);
 	public static Joystick rightStick = new Joystick(1);
 	public static Button shootButton = new JoystickButton(rightStick, 2);
-	
+	public static Button runPIDButton = new JoystickButton(rightStick, 1);
 
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
@@ -43,6 +44,7 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 	public OI(){
 		shootButton.whileHeld(new Shoot());
+		runPIDButton.whenPressed(new PathfinderTest());
 	}
 }
 

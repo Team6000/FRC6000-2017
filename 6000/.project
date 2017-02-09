@@ -13,5 +13,13 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>edu.wpi.first.wpilib.plugins.core.nature.FRCProjectNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>wplib_ant</name>
+			<type>2</type>
+			<location>C:/Users/Home/wpilib/java/current/ant</location>
+		</link>
+	</linkedResources>
 </projectDescription>

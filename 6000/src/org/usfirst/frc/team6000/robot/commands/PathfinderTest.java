@@ -29,7 +29,8 @@ public class PathfinderTest extends Command{
 	    	 * (so it can be whatever you want). 
 	    	 */
 	    	
-	    	Waypoint[] points = new Waypoint[] { new Waypoint(-4, -1, Pathfinder.d2r(-45)),  
+	    	Waypoint[] points = new Waypoint[] { 
+	    	new Waypoint(-4, -1, Pathfinder.d2r(-45)),  
 			new Waypoint(-2, -2, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
 			new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
 	    	};

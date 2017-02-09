@@ -3,6 +3,7 @@ package org.usfirst.frc.team6000.robot.subsystems;
 import org.usfirst.frc.team6000.robot.Robot;
 import org.usfirst.frc.team6000.robot.RobotMap;
 import org.usfirst.frc.team6000.robot.commands.TankDrive;
+import org.usfirst.frc.team6000.robot.subsystems.ImageRecognition;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -19,6 +20,8 @@ public class DriveTrain extends Subsystem {
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
+	
+	private ImageRecognition imageRec = new ImageRecognition();
 	
 	RobotDrive robotDrive = new RobotDrive(0, 1);
 	private AHRS gyro;
@@ -58,6 +61,8 @@ public class DriveTrain extends Subsystem {
 	
 	public void rotate(double angle) {
 		
+		angle = imageRec.alignCenter();
+		
 		previousError = currentError;
 		currentError = angle - gyro.pidGet();
 		sumError += currentError;
@@ -79,7 +84,7 @@ public class DriveTrain extends Subsystem {
 //		};
 
 		Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC,
-				Trajectory.Config.SAMPLES_FAST, 0.05, 4.27, 2.0, 60.0);
+		   Trajectory.Config.SAMPLES_FAST, 0.05, 4.27, 2.0, 60.0);
 		Trajectory trajectory = Pathfinder.generate(points, config);
 		TankModifier modifier = new TankModifier(trajectory).modify(0.68);
 		Trajectory leftT = modifier.getLeftTrajectory(); // Get the Left Side

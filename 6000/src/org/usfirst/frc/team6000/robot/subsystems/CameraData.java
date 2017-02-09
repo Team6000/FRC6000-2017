@@ -1,6 +1,7 @@
 package org.usfirst.frc.team6000.robot.subsystems;
 import java.awt.Point;
 
+
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class CameraData {
@@ -32,19 +33,55 @@ public class CameraData {
 	public boolean pointedAtGrip(){
 		return true;
 	}
-	public Point getTopLeft(){
+	
+	/*
+	 *       p1---------p2          p5---------p6
+	 *       |			|			|			|
+	 *       |			|			|			|
+	 *       |			|			|			|
+	 *       |			|			|			|
+	 *       |			|			|			|
+	 *       |			|			|			|
+	 *       |			|			|			|
+	 *       |			|			|			|
+	 *       |			|			|			|
+	 *       |			|			|			|
+	 *       p3---------p4          p7---------p8
+	 * 
+	 */
+	public Point getP1(){
+		return null;
 	}
-	public Point getBottomLeft(){
+	public Point getP2(){
+		return null;
 	}
-	public Point getTopRight(){
+	public Point getP3(){
+		return null;
 	}
-	public Point getBottomRight(){
+	public Point getP4(){
+		return null;
+	}
+	public Point getP5(){
+		return null;
+		
+	}
+	public Point getP6(){
+		return null;
+		
+	}
+	public Point getP7(){
+		return null;
+		
+	}
+	public Point getP8(){
+		return null;
+		
 	}
 	public int camWidth(){
-		
+		return 0;
 	}
 
 	public int CAM_WIDTH(){
-		
+		return 0;
 	}
 }
