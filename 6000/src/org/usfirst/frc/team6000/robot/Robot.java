@@ -2,11 +2,18 @@
 package org.usfirst.frc.team6000.robot;
 
 import org.usfirst.frc.team6000.robot.subsystems.DriveTrain;
+
 import org.usfirst.frc.team6000.robot.subsystems.Shooter;
 //import org.usfirst.frc.team6000.robot.subsystems.ImageRecognition;
+
 //import org.usfirst.frc.team6000.robot.subsystems.Climber;
 //import org.usfirst.frc.team6000.robot.subsystems.GearGrabber;
 //import org.usfirst.frc.team6000.robot.subsystems.Intake;
+
+import org.usfirst.frc.team6000.robot.subsystems.Climber;
+import org.usfirst.frc.team6000.robot.subsystems.GearGrabber;
+import org.usfirst.frc.team6000.robot.subsystems.Intake;
+
 
 import com.kauailabs.navx.frc.AHRS;
 

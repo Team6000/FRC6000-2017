@@ -1,9 +1,14 @@
+
+
 package org.usfirst.frc.team6000.robot.subsystems;
 
 import org.usfirst.frc.team6000.robot.Robot;
 import org.usfirst.frc.team6000.robot.RobotMap;
 import org.usfirst.frc.team6000.robot.commands.TankDrive;
+
 //import org.usfirst.frc.team6000.robot.subsystems.ImageRecognition;
+
+import org.usfirst.frc.team6000.robot.subsystems.ImageRecognition;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -20,6 +25,8 @@ public class DriveTrain extends Subsystem {
 
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
+	
+	private ImageRecognition imageRec = new ImageRecognition();
 	
 	//private ImageRecognition imageRec = new ImageRecognition();
 	
@@ -64,6 +71,8 @@ public class DriveTrain extends Subsystem {
 	public void rotate(double angle) {
 		
 		//angle = imageRec.alignCenter();
+		
+		angle = imageRec.alignCenter();
 		
 		previousError = currentError;
 		currentError = angle - gyro.pidGet();

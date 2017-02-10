@@ -1,5 +1,8 @@
 package org.usfirst.frc.team6000.robot.subsystems;
 
+//import com.ni.vision.NIVision.Point;
+import java.awt.Point;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import java.awt.Point;
 
@@ -8,14 +11,16 @@ public class ImageRecognition extends Subsystem {
 	double tapeHeight = 0;
 	double distance = 0;
 	double angAlign = 0;
+
 	// MEASURE RADIUS
 	static double RADIUS = 0;
-	
+
+
 	double centerToTape = 0;
+
 	
 	static double SCREEN_WIDTH = 1280/2;
-//	double tapeWidth = 0;
-	
+
 	protected void initDefaultCommand() {
 		
 	}
@@ -43,11 +48,19 @@ public class ImageRecognition extends Subsystem {
 		//etc...
 		/*
 		 *       p1---------p2          p5---------p6
+<<<<<<< HEAD
 		 *       |			|			|			|
 		 *       |			|			|			|
 		 *       |			|			|			|
 		 *       |			|			|			|
 		 *       |			|			|			|
+=======
+		 *       |           |          |			|
+		 *       |           |          |			|
+		 *       |           |          |			|
+		 *       |           |          |			|
+		 *       |           |          |			|
+>>>>>>> refs/remotes/origin/master
 		 *       |			|			|			|
 		 *       |			|			|			|
 		 *       |			|			|			|
