@@ -4,9 +4,9 @@ package org.usfirst.frc.team6000.robot;
 import org.usfirst.frc.team6000.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6000.robot.subsystems.Shooter;
 //import org.usfirst.frc.team6000.robot.subsystems.ImageRecognition;
-import org.usfirst.frc.team6000.robot.subsystems.Climber;
-import org.usfirst.frc.team6000.robot.subsystems.GearGrabber;
-import org.usfirst.frc.team6000.robot.subsystems.Intake;
+//import org.usfirst.frc.team6000.robot.subsystems.Climber;
+//import org.usfirst.frc.team6000.robot.subsystems.GearGrabber;
+//import org.usfirst.frc.team6000.robot.subsystems.Intake;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -29,7 +29,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
-	public static final Shooter shooter = new Shooter();
+	//public static final Shooter shooter = new Shooter();
 	public static OI oi;
 
     Command autonomousCommand;

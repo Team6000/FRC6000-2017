@@ -20,7 +20,7 @@ public class OI {
     // Button button = new JoystickButton(stick, buttonNumber);
 	public static Joystick leftStick = new Joystick(0);
 	public static Joystick rightStick = new Joystick(1);
-	public static Button shootButton = new JoystickButton(rightStick, 2);
+	//public static Button shootButton = new JoystickButton(rightStick, 2);
 	public static Button runPIDButton = new JoystickButton(rightStick, 1);
 
     // There are a few additional built in buttons you can use. Additionally,
@@ -43,7 +43,7 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 	public OI(){
-		shootButton.whileHeld(new Shoot());
+		//shootButton.whileHeld(new Shoot());
 		runPIDButton.whenPressed(new PathfinderTest());
 	}
 }
