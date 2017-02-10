@@ -17,15 +17,19 @@ public class RobotMap {
     // public static int leftMotor = 1;
     // public static int rightMotor = 2;
 	
-	public static Spark leftMotor;
-	public static Spark rightMotor;
-	public static Encoder leftWheelEncoder = new Encoder(0, 1);
-	public static Encoder rightWheelEncoder = new Encoder(2, 3);
-	public static DoubleSolenoid piston = new DoubleSolenoid(1, 1);
-	public static Ultrasonic ultra = new Ultrasonic(4, 5);
-	public static Spark intakeWheel;
-	public static Spark shooterWheel;
-	public static Spark climberWheel;
+	public static int leftDrivePort = 0;
+	public static int rightDrivePort = 1;
+	
+	public static int leftEncoderPortA = 0;
+	public static int leftEncoderPortB = 1;
+	public static int rightEncoderPortA = 2;
+	public static int rightEncoderPortB = 3;
+	
+	public static int intakePort = 2;
+	public static int shooterPort = 3;
+	public static int indexerPort = 4;
+	public static int climberPort = 5;
+	
 	
     
     // If you are using multiple modules, make sure to define both the port

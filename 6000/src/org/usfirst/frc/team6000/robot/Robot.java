@@ -11,7 +11,7 @@ import org.usfirst.frc.team6000.robot.subsystems.ImageRecognition;
 //import org.usfirst.frc.team6000.robot.subsystems.Intake;
 
 import org.usfirst.frc.team6000.robot.subsystems.Climber;
-import org.usfirst.frc.team6000.robot.subsystems.GearGrabber;
+
 import org.usfirst.frc.team6000.robot.subsystems.Intake;
 
 

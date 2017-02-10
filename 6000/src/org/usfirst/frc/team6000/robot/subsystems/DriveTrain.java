@@ -8,8 +8,10 @@ import org.usfirst.frc.team6000.robot.commands.TankDrive;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
@@ -22,43 +24,49 @@ public class DriveTrain extends Subsystem {
 	// Put methods for controlling this subsystem
 	// here. Call these from Commands.
 
+	private Spark leftDrive = new Spark(RobotMap.leftDrivePort);
+	private Spark rightDrive = new Spark(RobotMap.rightDrivePort);
 	
-	RobotDrive robotDrive = new RobotDrive(0, 1);
+	private RobotDrive mainDrive = new RobotDrive(leftDrive, rightDrive);
 	private AHRS gyro;
 	double currentError = 0, previousError = 0, sumError = 0, slopeError = 0;
 	
-
+	private Encoder leftWheelEncoder = new Encoder(RobotMap.leftEncoderPortA, 
+			RobotMap.leftEncoderPortB);
+	private Encoder rightWheelEncoder = new Encoder(RobotMap.rightEncoderPortA, 
+			RobotMap.rightEncoderPortB);	
+	
 	public DriveTrain() {		
-		gyro = Robot.ahrs;
+		gyro = Robot.ahrs; 
 		
 		// THIS SHIT IS MESSED UP
 		
-//		RobotMap.leftWheelEncoder.setMaxPeriod(0.1);
-//		RobotMap.leftWheelEncoder.setMinRate(10);
-//		RobotMap.leftWheelEncoder.setDistancePerPulse(18.85 / 360);
-//		RobotMap.leftWheelEncoder.setSamplesToAverage(50);
+//		leftWheelEncoder.setMaxPeriod(0.1);
+//		leftWheelEncoder.setMinRate(10);
+//		leftWheelEncoder.setDistancePerPulse(18.85 / 360);
+//		leftWheelEncoder.setSamplesToAverage(50);
 //
-//		RobotMap.rightWheelEncoder.setMaxPeriod(0.1);
-//		RobotMap.rightWheelEncoder.setMinRate(10);
-//		RobotMap.rightWheelEncoder.setDistancePerPulse(18.85 / 360);
-//		RobotMap.rightWheelEncoder.setSamplesToAverage(50);
+//		rightWheelEncoder.setMaxPeriod(0.1);
+//		rightWheelEncoder.setMinRate(10);
+//		rightWheelEncoder.setDistancePerPulse(18.85 / 360);
+//		rightWheelEncoder.setSamplesToAverage(50);
 	}
 
 	public void setLeft(double speed) {
-		RobotMap.leftMotor.set(speed);
+		leftDrive.set(speed);
 	}
 
 	public void setRight(double speed) {
-		RobotMap.rightMotor.set(speed);
+		rightDrive.set(speed);
 	}
 
 	public void rawDrive(double left, double right) {
-		RobotMap.rightMotor.set(right);
-		RobotMap.leftMotor.set(left);
+		rightDrive.set(right);
+		leftDrive.set(left);
 	}
 
 	public void tankDrive(Joystick leftStick, Joystick rightStick) {
-		robotDrive.tankDrive(leftStick, rightStick);
+		mainDrive.tankDrive(leftStick, rightStick);
 	}
 	
 	public void rotate(double angle) {
@@ -72,8 +80,8 @@ public class DriveTrain extends Subsystem {
 		double kI = 0.00001;
 		double kD = 0;
 		
-		RobotMap.leftMotor.set(kP * currentError + kI * sumError + kD * slopeError);
-		RobotMap.rightMotor.set(-(kP * currentError + kI * sumError + kD * slopeError));
+		leftDrive.set(kP * currentError + kI * sumError + kD * slopeError);
+		rightDrive.set(-(kP * currentError + kI * sumError + kD * slopeError));
 		
 	}
 	
@@ -104,8 +112,8 @@ public class DriveTrain extends Subsystem {
 		// 'getEncPosition' function. WE DONT KNOW WHAT THIS MEANS!!!!
 		// 1000 is the amount of encoder ticks per full revolution
 		// Wheel Diameter is the diameter of your wheels (or pulley for a track system) in meters
-		leftEncoderFollower.configureEncoder((int) RobotMap.leftWheelEncoder.getDistance(), 1440, .1524);
-		rightEncoderFollower.configureEncoder((int) RobotMap.rightWheelEncoder.getDistance(), 1440, .1524);
+		leftEncoderFollower.configureEncoder((int) leftWheelEncoder.getDistance(), 1440, .1524);
+		rightEncoderFollower.configureEncoder((int) rightWheelEncoder.getDistance(), 1440, .1524);
 
 		// The first argument is the proportional gain. Usually this will be quite high
 		// The second argument is the integral gain. This is unused for motion profiling
@@ -116,9 +124,9 @@ public class DriveTrain extends Subsystem {
 		leftEncoderFollower.configurePIDVA(1.0, 0.0, 0.0, 1 / 4.27, 0);
 		rightEncoderFollower.configurePIDVA(1.0, 0.0, 0.0, 1 / 4.27, 0);
 		
-		double leftOutput = leftEncoderFollower.calculate((int) RobotMap.leftWheelEncoder.getDistance()); 
+		double leftOutput = leftEncoderFollower.calculate((int) leftWheelEncoder.getDistance()); 
 		//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
-		double rightOutput = rightEncoderFollower.calculate((int) RobotMap.rightWheelEncoder.getDistance());
+		double rightOutput = rightEncoderFollower.calculate((int) rightWheelEncoder.getDistance());
 		//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
 
 		        double gyroHeading = (Double) gyro.getAngle();//FIND GYRO HEADING USING GYROSCOPE
@@ -127,8 +135,8 @@ public class DriveTrain extends Subsystem {
 				double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
 				double turn = 0.8 * (-1.0/80.0) * angleDifference;
 		
-				RobotMap.leftMotor.set(leftOutput - turn);
-				RobotMap.rightMotor.set(rightOutput + turn);
+				leftDrive.set(leftOutput - turn);
+				rightDrive.set(rightOutput + turn);
 
 		
 
