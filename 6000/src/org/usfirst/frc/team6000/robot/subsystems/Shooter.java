@@ -25,6 +25,7 @@ public class Shooter extends Subsystem {
 	Spark shooter = new Spark(RobotMap.shooterPort);
 	
 	public Shooter(){
+		
 	}
 	
 	public void spinShooterWheel(){
