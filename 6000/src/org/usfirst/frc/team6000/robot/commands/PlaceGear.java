@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class PlaceGear extends Command{
 
 	public double alignAngle = 0;
+	public double disToTarget = 0;
 	
 	public PlaceGear() {
         // Use requires() here to declare subsystem dependencies
@@ -36,6 +37,7 @@ public class PlaceGear extends Command{
 	    	Robot.driveTrain.rotate(alignAngle);
 	    	// Get the distance to travel with imgRec
 	    	// Drive forward to place gear, wait for a few seconds, then drive back
+	    	disToTarget = Robot.imgRec.distanceToTarget();
 	    	
 	    	
 	    }

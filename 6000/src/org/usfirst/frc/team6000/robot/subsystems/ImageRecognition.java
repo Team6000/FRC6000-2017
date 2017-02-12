@@ -11,15 +11,12 @@ public class ImageRecognition extends Subsystem {
 	double tapeHeight = 0;
 	double distance = 0;
 	double angAlign = 0;
-
-	// MEASURE RADIUS
-	static double RADIUS = 0;
-
-
 	double centerToTape = 0;
 
-	
-	static double SCREEN_WIDTH = 1280/2;
+	// MEASURE DISTANCE FROM CENTER OF ROBOT TO CAMERA AND CUTOFF DISTANCE
+	static double RADIUS = 0;
+	static double SCREEN_WIDTH = 1280;
+	static double VERTICAL_VIEW_ANGLE = 19.02;
 
 	protected void initDefaultCommand() {
 		
@@ -43,24 +40,18 @@ public class ImageRecognition extends Subsystem {
 		
 		if (!camera.pointedAtGrip()) return;
 		
-		//TL = Top left
-		//BR = Bottom Right
-		//etc...
 		/*
 		 *       p1---------p2          p5---------p6
-<<<<<<< HEAD
 		 *       |			|			|			|
 		 *       |			|			|			|
 		 *       |			|			|			|
 		 *       |			|			|			|
 		 *       |			|			|			|
-=======
-		 *       |           |          |			|
-		 *       |           |          |			|
-		 *       |           |          |			|
-		 *       |           |          |			|
-		 *       |           |          |			|
->>>>>>> refs/remotes/origin/master
+		 *       |          |           |			|
+		 *       |          |           |			|
+		 *       |          |           |			|
+		 *       |          |           |			|
+		 *       |          |           |			|
 		 *       |			|			|			|
 		 *       |			|			|			|
 		 *       |			|			|			|
@@ -111,25 +102,20 @@ public class ImageRecognition extends Subsystem {
 		return angAlign;
 	}
 	
-	/* Checks if the robot is at a good enough angle to move straight to put the gear on the peg
-	   Requires: Ultrasonic sensor data
-	   Variables in use:
-	     d = distance from camera to wall that bisects the viewing angle of the camera
-	     w = half the width in the camcera frame
-	     angRaw = the angle between the viewing angle bisector and the flat wall
-	     angError = the difference between 90 degrees, which is perfect, and the angRaw
-	   To calculate angRaw:
-	     90 degrees : 2in. just as angRaw : apparent width of retroflective tape
-	   To calculate Apparent width of retroflective tape
-	     (FIND FORMULA TO CALCULATE W WHEN ANGRAW IS 90 DEGREES) inches : w in pixels just as apparent width : w in pixels.
-	*/
-//	public void checkIfRightAngle(float d) {
-//		double w = 0; // in Pixels originally, then convert to inches
-//
-//		double angRaw = 90.0;
-//		double angError = 90 - angRaw;
-//		double maxError = 0;
-//	}
+	/*
+	 * Uses the ratio of the tapeHeight and inches to get the distance from the camera to the target in pixels
+	 * Converts the distance in pixels to inches using the ratio from the tapeHeight
+	 * 360 is half the vertical pixels of the 720p camera
+	 */
+	
+	public double distanceToTarget() {
+		double dis = 0;
+		
+		dis = (360)/Math.tan(VERTICAL_VIEW_ANGLE);
+		dis = convertToInches(dis);
+		
+		return dis;
+	}
 	
 	// converts a length in the image from pixels to inches
 	public double convertToInches (double pix){
@@ -138,6 +124,7 @@ public class ImageRecognition extends Subsystem {
 		
 		return pix * ratio;
 	}
+	// converts a length in the image from inches to pixels
 	public double convertToPixels (double inches){
 		double ratio = 0;
 		ratio = 5/tapeHeight;
