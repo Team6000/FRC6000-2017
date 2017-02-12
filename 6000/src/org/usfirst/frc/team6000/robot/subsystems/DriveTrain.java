@@ -41,15 +41,17 @@ public class DriveTrain extends Subsystem {
 		
 		// THIS SHIT IS MESSED UP
 		
-//		leftWheelEncoder.setMaxPeriod(0.1);
-//		leftWheelEncoder.setMinRate(10);
-//		leftWheelEncoder.setDistancePerPulse(18.85 / 360);
-//		leftWheelEncoder.setSamplesToAverage(50);
-//
-//		rightWheelEncoder.setMaxPeriod(0.1);
-//		rightWheelEncoder.setMinRate(10);
-//		rightWheelEncoder.setDistancePerPulse(18.85 / 360);
-//		rightWheelEncoder.setSamplesToAverage(50);
+		leftWheelEncoder.setMaxPeriod(0.1);
+		leftWheelEncoder.setMinRate(10);
+		leftWheelEncoder.setDistancePerPulse(18.85 / 1440);
+		leftWheelEncoder.setReverseDirection(true);
+		leftWheelEncoder.setSamplesToAverage(10);
+
+		rightWheelEncoder.setMaxPeriod(0.1);
+		rightWheelEncoder.setMinRate(10);
+		rightWheelEncoder.setDistancePerPulse(18.85 / 1440);
+		rightWheelEncoder.setReverseDirection(true);
+		rightWheelEncoder.setSamplesToAverage(10);
 	}
 
 	public void setLeft(double speed) {
@@ -92,7 +94,7 @@ public class DriveTrain extends Subsystem {
 //		};
 
 		Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC,
-		   Trajectory.Config.SAMPLES_FAST, 0.05, 4.27, 2.0, 60.0);
+		   Trajectory.Config.SAMPLES_FAST, 0.05, 3.07, 2.0, 60.0);
 		Trajectory trajectory = Pathfinder.generate(points, config);
 		TankModifier modifier = new TankModifier(trajectory).modify(0.68);
 		Trajectory leftT = modifier.getLeftTrajectory(); // Get the Left Side
@@ -112,8 +114,8 @@ public class DriveTrain extends Subsystem {
 		// 'getEncPosition' function. WE DONT KNOW WHAT THIS MEANS!!!!
 		// 1000 is the amount of encoder ticks per full revolution
 		// Wheel Diameter is the diameter of your wheels (or pulley for a track system) in meters
-		leftEncoderFollower.configureEncoder((int) leftWheelEncoder.getDistance(), 1440, .1524);
-		rightEncoderFollower.configureEncoder((int) rightWheelEncoder.getDistance(), 1440, .1524);
+		leftEncoderFollower.configureEncoder(leftWheelEncoder.getRaw(), 1440, .1524);
+		rightEncoderFollower.configureEncoder( rightWheelEncoder.getRaw(), 1440, .1524);
 
 		// The first argument is the proportional gain. Usually this will be quite high
 		// The second argument is the integral gain. This is unused for motion profiling
@@ -124,9 +126,9 @@ public class DriveTrain extends Subsystem {
 		leftEncoderFollower.configurePIDVA(1.0, 0.0, 0.0, 1 / 4.27, 0);
 		rightEncoderFollower.configurePIDVA(1.0, 0.0, 0.0, 1 / 4.27, 0);
 		
-		double leftOutput = leftEncoderFollower.calculate((int) leftWheelEncoder.getDistance()); 
+		double leftOutput = leftEncoderFollower.calculate(leftWheelEncoder.getRaw()); 
 		//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
-		double rightOutput = rightEncoderFollower.calculate((int) rightWheelEncoder.getDistance());
+		double rightOutput = rightEncoderFollower.calculate(rightWheelEncoder.getRaw());
 		//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
 
 		        double gyroHeading = (Double) gyro.getAngle();//FIND GYRO HEADING USING GYROSCOPE
@@ -135,8 +137,8 @@ public class DriveTrain extends Subsystem {
 				double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
 				double turn = 0.8 * (-1.0/80.0) * angleDifference;
 		
-				leftDrive.set(leftOutput - turn);
-				rightDrive.set(rightOutput + turn);
+				leftDrive.set(leftOutput + turn);
+				rightDrive.set(rightOutput - turn);
 
 		
 
