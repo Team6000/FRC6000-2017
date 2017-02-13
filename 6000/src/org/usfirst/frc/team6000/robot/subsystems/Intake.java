@@ -9,15 +9,19 @@ public class Intake extends Subsystem{
 	Spark intake = new Spark(RobotMap.intakePort);
 	
 	protected void initDefaultCommand() {
-		intake.set(0.75);
 	}
-	
-	public void startIntake() {
+//	
+//	public void startIntake() {
+//		intake.set(0.75);
+//	}
+//	
+//	public void stopIntake() {
+//		intake.set(0);
+//	}
+
+	public void spinIntake() {
+		// TODO Auto-generated method stub
 		intake.set(0.75);
-	}
-	
-	public void stopIntake() {
-		intake.set(0);
 	}
 
 }
