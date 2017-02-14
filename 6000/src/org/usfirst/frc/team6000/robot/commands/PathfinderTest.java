@@ -97,6 +97,9 @@ public class PathfinderTest extends Command{
 			double turn = 0.8 * (-1.0/80.0) * angleDifference;
 	
 			Robot.driveTrain.rawDrive(leftOutput + turn, -(rightOutput - turn));
+		    
+		    System.out.println("getAngle: " + gyroHeading + "angleDifference: " + angleDifference + 
+				       "leftOutput: " + leftOutput + "rightOutput: " + rightOutput + "turn: " + turn);
 	    }
 
 	    // Make this return true when this Command no longer needs to run execute()
