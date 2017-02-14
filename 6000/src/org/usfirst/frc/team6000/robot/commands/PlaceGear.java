@@ -36,6 +36,7 @@ public class PlaceGear extends Command{
 	    	// rotate the robot to have it facing the center of the tapes
 	    	Robot.driveTrain.rotate(alignAngle);
 	    	// Get the distance to travel with imgRec
+	    	// distanceToTarget returns a value in INCHES
 	    	// Drive forward to place gear, wait for a few seconds, then drive back
 	    	disToTarget = Robot.imgRec.distanceToTarget();
 	    	

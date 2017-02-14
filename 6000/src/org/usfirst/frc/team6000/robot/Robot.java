@@ -6,6 +6,7 @@ import org.usfirst.frc.team6000.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6000.robot.subsystems.Shooter;
 import org.usfirst.frc.team6000.robot.subsystems.ImageRecognition;
 import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
+import org.usfirst.frc.team6000.robot.subsystems.CameraData;
 
 //import org.usfirst.frc.team6000.robot.subsystems.Climber;
 //import org.usfirst.frc.team6000.robot.subsystems.GearGrabber;
@@ -42,6 +43,7 @@ public class Robot extends IterativeRobot {
 	//public static final Shooter shooter = new Shooter();
 	public static OI oi;
 	public static final ImageRecognition imgRec = new ImageRecognition();
+	public static final CameraData cmData = new CameraData();
 
     Command autonomousCommand;
     SendableChooser chooser;

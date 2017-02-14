@@ -97,8 +97,8 @@ public class ImageRecognition extends Subsystem {
 
 	public double alignCenter() {
 		RADIUS = convertToPixels(RADIUS);
-		angAlign = Math.atan((centerToTape*(Math.tan(30)))/((SCREEN_WIDTH/2)+RADIUS*(Math.tan(30))));
-		
+		angAlign = Math.atan((centerToTape*(Math.tan(Math.toRadians(30))))/((SCREEN_WIDTH/2)+RADIUS*(Math.tan(Math.toRadians(30)))));
+		angAlign = Math.toDegrees(angAlign);
 		return angAlign;
 	}
 	
@@ -111,7 +111,7 @@ public class ImageRecognition extends Subsystem {
 	public double distanceToTarget() {
 		double dis = 0;
 		
-		dis = (360)/Math.tan(VERTICAL_VIEW_ANGLE);
+		dis = (360)/Math.tan(Math.toRadians(VERTICAL_VIEW_ANGLE));
 		dis = convertToInches(dis);
 		
 		return dis;
