@@ -50,10 +50,42 @@ public class CameraData {
 	Line l7 = new Line();
 	Line l8 = new Line();
 	
+	double[] defaultValue = new double[0];
+	
 	public void popLines(){
 		while(true){
 			Line l = new Line();
+			double[] point1 = lines.getNumberArray("p1", defaultValue);
+			double[] point2 = lines.getNumberArray("p2", defaultValue);
+			l.x1 = point1[0];
+			l.y1 = point1[1];
+			l.x2 = point2[0];
+			l.y2 = point2[1];
 			
+			// Calculate slope
+			if(l.x1 != l.x2){
+				double slope = (l.y2-l.y1)/(l.x2-l.x1);
+				if(Math.abs(slope)>1){
+					l.alignment = 'v';
+				}
+				else if(Math.abs(slope)<1){
+					l.alignment = 'h';
+				}
+			}
+			else{
+				l.alignment = 'v';
+			}
+			// If the line is horizontal, throw it away and start again with another line
+			if(l.alignment == 'h'){
+				break;
+			}
+			else if (l.alignment == 'v'){
+				
+			}
+			else{
+				System.out.println("The line is not set up correctly");
+				break;
+			}
 		}
 	}
 	
