@@ -6,6 +6,7 @@ import org.usfirst.frc.team6000.robot.subsystems.DriveTrain;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
@@ -56,7 +57,7 @@ public class PathfinderTest extends Command{
 					otherwise you may find your path tracking inaccurately */
 					
 
-				    leftEncoderFollower = new EncoderFollower(leftT); 
+				  leftEncoderFollower = new EncoderFollower(leftT); 
 					rightEncoderFollower = new EncoderFollower(rightT);
 					
 					// Encoder Position is the current, cumulative position of your encoder. If you're using an SRX, this will be the
@@ -75,13 +76,13 @@ public class PathfinderTest extends Command{
 					leftEncoderFollower.configurePIDVA(1.0, 0.0, 0.0, 1 / 4.27, 0);
 					rightEncoderFollower.configurePIDVA(1.0, 0.0, 0.0, 1 / 4.27, 0);
 					
-					for (int i = 0; i < trajectory.length(); i++) {
-					    Trajectory.Segment seg = trajectory.get(i);
-
-					    System.out.printf("%f,%f,%f,%f,%f,%f,%f,%f\n", 
-					        seg.dt, seg.x, seg.y, seg.position, seg.velocity, 
-					            seg.acceleration, seg.jerk, seg.heading);
-					}
+//					for (int i = 0; i < trajectory.length(); i++) {
+//					    Trajectory.Segment seg = trajectory.get(i);
+//
+//					    System.out.printf("%f,%f,%f,%f,%f,%f,%f,%f\n", 
+//					        seg.dt, seg.x, seg.y, seg.position, seg.velocity, 
+//					            seg.acceleration, seg.jerk, seg.heading);
+//					}
 	    }
 
 	    // Called repeatedly when this Command is scheduled to run
@@ -91,6 +92,8 @@ public class PathfinderTest extends Command{
 			double rightOutput = rightEncoderFollower.calculate(Robot.driveTrain.getRightWheelEncoder().getRaw());
 			//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
 	        double gyroHeading = gyro.getAngle();//FIND GYRO HEADING USING GYROSCOPE
+	        SmartDashboard.putNumber("getAngle", gyroHeading);
+	        SmartDashboard.putNumber("pidGet", gyro.pidGet());
 	        // Assuming the gyro is giving a value in degrees
 			double desiredHeading = Pathfinder.r2d(leftEncoderFollower.getHeading());  // Should also be in degrees
 			double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
@@ -98,8 +101,11 @@ public class PathfinderTest extends Command{
 	
 			Robot.driveTrain.rawDrive(leftOutput + turn, -(rightOutput - turn));
 		    
-		    System.out.println("getAngle: " + gyroHeading + "angleDifference: " + angleDifference + 
-				       "leftOutput: " + leftOutput + "rightOutput: " + rightOutput + "turn: " + turn);
+		    System.out.println("getAngle: " + gyroHeading);
+		    System.out.println("angleDifference: " + angleDifference);
+		    System.out.println("turn: " + turn);
+		    System.out.println("leftOutput: " + leftOutput);
+		    System.out.println("rightOutput: " + rightOutput);
 	    }
 
 	    // Make this return true when this Command no longer needs to run execute()
