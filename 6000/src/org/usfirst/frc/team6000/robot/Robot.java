@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.CameraServer;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -63,6 +64,8 @@ public class Robot extends IterativeRobot {
 		} catch (RuntimeException ex) {
 			 DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 		}
+        // Start the camera capturing stuff
+        CameraServer.getInstance().startAutomaticCapture();
     }
 	
 	/**
