@@ -1,10 +1,12 @@
 package org.usfirst.frc.team6000.robot;
 
 import org.usfirst.frc.team6000.robot.commands.IntakeBalls;
-import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
+//import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
 import org.usfirst.frc.team6000.robot.commands.Shoot;
+import org.usfirst.frc.team6000.robot.commands.StopIntake;
+import org.usfirst.frc.team6000.robot.commands.StopShoot;
 
-import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
+//import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
 
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -24,13 +26,14 @@ public class OI {
     // Button button = new JoystickButton(stick, buttonNumber);
 	public static Joystick leftStick = new Joystick(0);
 	public static Joystick rightStick = new Joystick(1);
-
+	public static Joystick secondaryStick = new Joystick(2);
+	
 	//public static Button shootButton = new JoystickButton(rightStick, 2);
 
-	public static Button runPIDButton = new JoystickButton(rightStick, 1);
+//	public static Button runPIDButton = new JoystickButton(secondaryStick, 1);
 	
-	public static Button shootButton = new JoystickButton(rightStick, 3);
-	public static Button intakeButton = new JoystickButton(rightStick, 4);
+	public static Button shootButton = new JoystickButton(secondaryStick, 2);
+	public static Button intakeButton = new JoystickButton(secondaryStick, 1);
 
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
@@ -54,8 +57,12 @@ public class OI {
 	public OI(){
 
 		shootButton.whileHeld(new Shoot());
+		shootButton.whenReleased(new StopShoot());
+		
 		intakeButton.whileHeld(new IntakeBalls());
-		runPIDButton.whenPressed(new PathfinderTest());
+		intakeButton.whenReleased(new StopIntake());
+		
+//		runPIDButton.whenPressed(new PathfinderTest());
 	}
 }
 

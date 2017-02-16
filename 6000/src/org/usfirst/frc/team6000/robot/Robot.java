@@ -5,12 +5,13 @@ import org.usfirst.frc.team6000.robot.subsystems.DriveTrain;
 
 import org.usfirst.frc.team6000.robot.subsystems.Shooter;
 import org.usfirst.frc.team6000.robot.subsystems.ImageRecognition;
+import org.usfirst.frc.team6000.robot.subsystems.Indexer;
 import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
 import org.usfirst.frc.team6000.robot.subsystems.CameraData;
 
 //import org.usfirst.frc.team6000.robot.subsystems.Climber;
 //import org.usfirst.frc.team6000.robot.subsystems.GearGrabber;
-//import org.usfirst.frc.team6000.robot.subsystems.Intake;
+import org.usfirst.frc.team6000.robot.subsystems.Intake;
 
 import org.usfirst.frc.team6000.robot.subsystems.Climber;
 
@@ -29,6 +30,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.CameraServer;
 
+import org.opencv.core.Mat;
+import org.opencv.imgproc.Imgproc;
+
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+
 /**
  * The VM is configured to automatically run this class, and to call the
  * functions corresponding to each mode, as described in the IterativeRobot
@@ -41,10 +49,10 @@ public class Robot extends IterativeRobot {
 	public static final DriveTrain driveTrain = new DriveTrain();
 	public static final Shooter shooter = new Shooter();
 	public static final Intake intake = new Intake();
-	//public static final Shooter shooter = new Shooter();
+	public static final Indexer indexer = new Indexer();
 	public static OI oi;
 	public static final ImageRecognition imgRec = new ImageRecognition();
-	public static final CameraData cmData = new CameraData();
+//	public static final CameraData cmData = new CameraData();
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -59,13 +67,14 @@ public class Robot extends IterativeRobot {
         chooser = new SendableChooser();
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+        CameraServer.getInstance().startAutomaticCapture();
+        
+
         try {
 			ahrs =  new AHRS(SPI.Port.kMXP);
 		} catch (RuntimeException ex) {
 			 DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 		}
-        // Start the camera capturing stuff
-        CameraServer.getInstance().startAutomaticCapture();
     }
 	
 	/**
@@ -91,7 +100,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = new PathfinderTest();
+//        autonomousCommand = new PathfinderTest();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {

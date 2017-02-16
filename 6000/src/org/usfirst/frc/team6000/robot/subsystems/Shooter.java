@@ -28,6 +28,8 @@ public class Shooter extends Subsystem {
 		
 	}
 	
+	
+	
 	public void spinShooterWheel(){
 		shooter.set(.6);
 	}

@@ -15,13 +15,13 @@ public class Intake extends Subsystem{
 //		intake.set(0.75);
 //	}
 //	
-//	public void stopIntake() {
-//		intake.set(0);
-//	}
+	public void stopIntake() {
+		intake.set(0);
+	}
 
 	public void spinIntake() {
 		// TODO Auto-generated method stub
-		intake.set(0.75);
+		intake.set(-0.75);
 	}
 
 }
