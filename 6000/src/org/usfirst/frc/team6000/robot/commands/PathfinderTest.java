@@ -64,8 +64,8 @@ public class PathfinderTest extends Command{
 					// 'getEncPosition' function. WE DONT KNOW WHAT THIS MEANS!!!!
 					// 1000 is the amount of encoder ticks per full revolution
 					// Wheel Diameter is the diameter of your wheels (or pulley for a track system) in meters
-					leftEncoderFollower.configureEncoder(Robot.driveTrain.getLeftWheelEncoder().getRaw(), 1440, .1524);
-					rightEncoderFollower.configureEncoder(Robot.driveTrain.getRightWheelEncoder().getRaw(), 1440, .1524);
+					leftEncoderFollower.configureEncoder(Robot.driveTrain.getLeftWheelEncoder().get(), 1440, .1524);
+					rightEncoderFollower.configureEncoder(Robot.driveTrain.getRightWheelEncoder().get(), 1440, .1524);
 
 					// The first argument is the proportional gain. Usually this will be quite high
 					// The second argument is the integral gain. This is unused for motion profiling
@@ -87,9 +87,9 @@ public class PathfinderTest extends Command{
 
 	    // Called repeatedly when this Command is scheduled to run
 	    protected void execute() {
-	    	double leftOutput = leftEncoderFollower.calculate(Robot.driveTrain.getRightWheelEncoder().getRaw()); 
+	    	double leftOutput = leftEncoderFollower.calculate(Robot.driveTrain.getRightWheelEncoder().get()); 
 			//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
-			double rightOutput = rightEncoderFollower.calculate(Robot.driveTrain.getRightWheelEncoder().getRaw());
+			double rightOutput = rightEncoderFollower.calculate(Robot.driveTrain.getRightWheelEncoder().get());
 			//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
 	        double gyroHeading = gyro.getAngle();//FIND GYRO HEADING USING GYROSCOPE
 	        SmartDashboard.putNumber("getAngle", gyroHeading);
