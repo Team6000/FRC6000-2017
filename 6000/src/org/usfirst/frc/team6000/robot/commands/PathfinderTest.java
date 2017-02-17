@@ -103,6 +103,8 @@ public class PathfinderTest extends Command{
 		    
 		    System.out.println("getAngle: " + gyroHeading);
 		    System.out.println("angleDifference: " + angleDifference);
+		    System.out.println("RightWheelEncoder.get(): " + Robot.driveTrain.getRightWheelEncoder().get());
+        System.out.println("LeftWheelEncoder.get(): " + Robot.driveTrain.getLeftWheelEncoder().get());
 		    System.out.println("turn: " + turn);
 		    System.out.println("leftOutput: " + leftOutput);
 		    System.out.println("rightOutput: " + rightOutput);
