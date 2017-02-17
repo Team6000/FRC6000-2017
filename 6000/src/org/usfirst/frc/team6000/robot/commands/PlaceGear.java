@@ -13,7 +13,7 @@ public class PlaceGear extends Command{
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		//requires(Robot.shooter);
-		requires(Robot.driveTrain);
+//		requires(Robot.driveTrain);
 		requires(Robot.imgRec);
     }
 
@@ -34,7 +34,7 @@ public class PlaceGear extends Command{
 	    	alignAngle = Robot.imgRec.alignCenter();
 	    	
 	    	// rotate the robot to have it facing the center of the tapes
-	    	Robot.driveTrain.rotate(alignAngle);
+//	    	Robot.driveTrain.rotate(alignAngle);
 	    	// Get the distance to travel with imgRec
 	    	// distanceToTarget returns a value in INCHES
 	    	// Drive forward to place gear, wait for a few seconds, then drive back

@@ -5,6 +5,7 @@ import org.usfirst.frc.team6000.robot.commands.IntakeBalls;
 import org.usfirst.frc.team6000.robot.commands.Shoot;
 import org.usfirst.frc.team6000.robot.commands.StopIntake;
 import org.usfirst.frc.team6000.robot.commands.StopShoot;
+import org.usfirst.frc.team6000.robot.commands.PlaceGear;
 
 //import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
 
@@ -34,7 +35,8 @@ public class OI {
 	
 	public static Button shootButton = new JoystickButton(secondaryStick, 2);
 	public static Button intakeButton = new JoystickButton(secondaryStick, 1);
-
+//	public static Button placeGearBtn = new JoystickButton(secondaryStick, 3);
+//	public static Button stopPlaceGearBtn = new JoystickButton(secondaryStick, 4);
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
@@ -61,6 +63,9 @@ public class OI {
 		
 		intakeButton.whileHeld(new IntakeBalls());
 		intakeButton.whenReleased(new StopIntake());
+		
+//		placeGearBtn.whenPressed(new PlaceGear());
+//		stopPlaceGearBtn.whenPressed();
 		
 //		runPIDButton.whenPressed(new PathfinderTest());
 	}
