@@ -72,6 +72,14 @@ public class CameraData {
 	double lineX3 = 0;
 	double lineX4 = 0;
 	
+	// Calls the entire process
+	public void entireProcess(){
+		popLines();
+		segregateLines();
+		cutMedians();
+	}
+	
+	// Populates the lines with the lines output from the pipeline
 	public void popLines(){
 		for(int i=0;i<Robot.pipeline.filterLinesOutput().size(); i++){
 			Line l = new Line();

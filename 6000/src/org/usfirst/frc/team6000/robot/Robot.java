@@ -54,7 +54,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static final ImageRecognition imgRec = new ImageRecognition();
 	public static final PiplelieOne pipeline = new PiplelieOne();
-//	public static final CameraData cmData = new CameraData();
+	public static final CameraData cmData = new CameraData();
 
     Command autonomousCommand;
     SendableChooser chooser;

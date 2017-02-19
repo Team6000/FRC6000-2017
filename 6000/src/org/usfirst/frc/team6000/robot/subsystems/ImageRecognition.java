@@ -3,6 +3,8 @@ package org.usfirst.frc.team6000.robot.subsystems;
 //import com.ni.vision.NIVision.Point;
 import java.awt.Point;
 
+import org.usfirst.frc.team6000.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import java.awt.Point;
 
@@ -60,6 +62,9 @@ public class ImageRecognition extends Subsystem {
 		 *       p3---------p4          p7---------p8
 		 * 
 		 */
+		
+		// Run the entire process of CameraData to get P1-P8
+		Robot.cmData.entireProcess();
 		
 		Point P1,P2,P3,P4,P5,P6,P7,P8;
 		P1 = camera.getP1();
