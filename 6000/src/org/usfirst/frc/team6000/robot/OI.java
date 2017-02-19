@@ -11,6 +11,8 @@ import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -37,8 +39,7 @@ public class OI {
 	public static Button intakeButton = new JoystickButton(secondaryStick, 1);
 	public static Button placeGearBtn = new JoystickButton(secondaryStick, 3);
 	public static Button stopPlaceGearBtn = new JoystickButton(secondaryStick, 4);
-	
-//github.com/Team6000/FRC6000-2017.git
+
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
@@ -68,7 +69,12 @@ public class OI {
 		placeGearBtn.whenPressed(new PlaceGear());
 
 		runPIDButton.whenPressed(new PathfinderTest());
-
+		
+		SmartDashboard.putData("PlaceGear", new PlaceGear());
+		SmartDashboard.putData("Shoot", new Shoot());
+		SmartDashboard.putData("StopIntake", new StopIntake());
+		SmartDashboard.putData("Intake", new IntakeBalls());
+		SmartDashboard.putData("runPID", new PathfinderTest());
 	}
 }
 

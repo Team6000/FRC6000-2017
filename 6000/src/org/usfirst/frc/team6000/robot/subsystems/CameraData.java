@@ -1,8 +1,11 @@
 package org.usfirst.frc.team6000.robot.subsystems;
 import java.awt.Point;
+
+import org.usfirst.frc.team6000.robot.Robot;
 import org.usfirst.frc.team6000.robot.subsystems.Line;
 import java.util.*;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class CameraData {
@@ -12,8 +15,8 @@ public class CameraData {
 	//This connects us to the NetworkTables
 	//
 	public CameraData(){
-		lines = NetworkTable.getTable("GRIP/myCountoursReport");
-		countours = NetworkTable.getTable("GRIP/myLinesReport");
+//		lines = NetworkTable.getTable("GRIP/myCountoursReport");
+//		countours = NetworkTable.getTable("GRIP/myLinesReport");
 	}
 	
 	//find distance between two Points
@@ -70,14 +73,12 @@ public class CameraData {
 	double lineX4 = 0;
 	
 	public void popLines(){
-		while(true){
+		for(int i=0;i<Robot.pipeline.filterLinesOutput().size(); i++){
 			Line l = new Line();
-			double[] point1 = lines.getNumberArray("p1", defaultValue);
-			double[] point2 = lines.getNumberArray("p2", defaultValue);
-			l.x1 = point1[0];
-			l.y1 = point1[1];
-			l.x2 = point2[0];
-			l.y2 = point2[1];
+			l.x1 = Robot.pipeline.filterLinesOutput.get(i).x1;
+			l.y1 = Robot.pipeline.filterLinesOutput.get(i).y1;
+			l.x2 = Robot.pipeline.filterLinesOutput.get(i).x2;
+			l.y2 = Robot.pipeline.filterLinesOutput.get(i).y2;
 			
 			// Calculate slope
 			if(l.x1 != l.x2){
@@ -89,6 +90,7 @@ public class CameraData {
 					l.alignment = 'h';
 				}
 			}
+			
 			else{
 				l.alignment = 'v';
 			}
@@ -112,7 +114,8 @@ public class CameraData {
 		double leeWay = 15;
 		for(int i = 0; i<checkLines.size(); i++){
 			cursor = checkLines.get(i).x1;
-			// Go through every single vertical line to see if it has three ahead of it
+			// Go through every single vertical line to see if it has three vertical lines to the right of it
+			// lineNumber = the big line that the vertical line is part of
 			cursor += leeWay;
 			for(int j = 0; j<1280-checkLines.get(i).x1; j++){
 				cursor ++;

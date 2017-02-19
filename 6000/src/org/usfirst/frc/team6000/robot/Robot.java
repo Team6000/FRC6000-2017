@@ -62,9 +62,8 @@ public class Robot extends IterativeRobot {
     
     public static UsbCamera camera; 
 	public static CvSink cvSink;
-    
-    private static final int IMG_WIDTH = 320;
-	private static final int IMG_HEIGHT = 240;
+	public static CvSource cvSource;
+
 
     /**
      * This function is run when the robot is first started up and should be
@@ -85,9 +84,14 @@ public class Robot extends IterativeRobot {
 			 DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 		}
     	
+        // Start showing the camera on the dashboard and put the feed into a UsbCamera
     	camera = CameraServer.getInstance().startAutomaticCapture();
+    	// Set the resolution to 640 by 480
     	camera.setResolution(640, 480);
+    	// Allow for openCV to do its stuff via the pipeline
     	cvSink = CameraServer.getInstance().getVideo();
+    	// Put whatever output onto the smartDashboard
+    	cvSource = CameraServer.getInstance().putVideo("PipeLine_Output", 640, 480);
     }
 	
 	/**

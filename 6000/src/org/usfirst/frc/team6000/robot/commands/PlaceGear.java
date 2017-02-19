@@ -42,8 +42,22 @@ public class PlaceGear extends Command{
 			//CvSource outputStream = CameraServer.getInstance().putVideo("Rectangle", 640, 480);
 			Robot.cvSink.grabFrame(source);
 			Robot.pipeline.process(source);
+			
+			// 1st line puts the source image onto the smartdashboard
+			// 2nd line puts the HSV output onto the smartdashboard
+			Robot.cvSource.putFrame(source);
+//			Robot.cvSource.putFrame(Robot.pipeline.hsvThresholdOutput());
 	    	
-			System.out.println(Robot.pipeline.filterLinesOutput);
+			// Just for testing
+			if(Robot.pipeline.filterLinesOutput != null){
+				for(int i=0; i<Robot.pipeline.filterLinesOutput.size(); i++){
+					System.out.println(Robot.pipeline.filterLinesOutput.size());
+					System.out.println(Robot.pipeline.filterLinesOutput.get(i).x1);
+				}
+			}
+			else {
+				System.out.println("ERROR: Did not find any lines");
+			}
 			
 	    	alignAngle = Robot.imgRec.alignCenter();
 	    	disToTarget = Robot.imgRec.distanceToTarget();
@@ -55,14 +69,8 @@ public class PlaceGear extends Command{
 	    // Called repeatedly when this Command is scheduled to run
 	    protected void execute() {
 	    	// Check if the whole process is done and then call isFinished().
+	    	// Right now, for testing, the process should only run once and then stop
 	    	this.isFinished();
-
-	    	// rotate the robot to have it facing the center of the tapes
-	    	Robot.driveTrain.rotate(alignAngle);
-	    	// Get the distance to travel with imgRec
-	    	// distanceToTarget returns a value in INCHES
-	    	// Drive forward to place gear, wait for a few seconds, then drive back
-	    	disToTarget = Robot.imgRec.distanceToTarget();
 	    }
 
 	    // Make this return true when this Command no longer needs to run execute()
