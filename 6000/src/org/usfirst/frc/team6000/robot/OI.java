@@ -25,7 +25,6 @@ public class OI {
     // number it is.
     // Joystick stick = new Joystick(port);
     // Button button = new JoystickButton(stick, buttonNumber);
-
 	public static Joystick secondaryStick = new Joystick(2);
 
 	public static Joystick leftStick = new Joystick(0);
