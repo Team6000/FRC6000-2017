@@ -55,8 +55,14 @@ public class PlaceGear extends Command{
 	    // Called repeatedly when this Command is scheduled to run
 	    protected void execute() {
 	    	// Check if the whole process is done and then call isFinished().
-	    	
 	    	this.isFinished();
+
+	    	// rotate the robot to have it facing the center of the tapes
+	    	Robot.driveTrain.rotate(alignAngle);
+	    	// Get the distance to travel with imgRec
+	    	// distanceToTarget returns a value in INCHES
+	    	// Drive forward to place gear, wait for a few seconds, then drive back
+	    	disToTarget = Robot.imgRec.distanceToTarget();
 	    }
 
 	    // Make this return true when this Command no longer needs to run execute()

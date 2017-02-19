@@ -4,6 +4,7 @@ package org.usfirst.frc.team6000.robot.subsystems;
 import java.awt.Point;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import java.awt.Point;
 
 public class ImageRecognition extends Subsystem {
 

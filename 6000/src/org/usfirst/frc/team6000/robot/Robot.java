@@ -6,7 +6,7 @@ import org.usfirst.frc.team6000.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team6000.robot.subsystems.Shooter;
 import org.usfirst.frc.team6000.robot.subsystems.ImageRecognition;
 import org.usfirst.frc.team6000.robot.subsystems.Indexer;
-//import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
+import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
 import org.usfirst.frc.team6000.robot.subsystems.CameraData;
 
 //import org.usfirst.frc.team6000.robot.subsystems.Climber;
@@ -113,7 +113,7 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-//        autonomousCommand = new PathfinderTest();
+        autonomousCommand = new PathfinderTest();
         
 		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		switch(autoSelected) {
