@@ -21,7 +21,7 @@ public class Intake extends Subsystem{
 
 	public void spinIntake() {
 		// TODO Auto-generated method stub
-		intake.set(0.75);
+		intake.set(-0.60);
 	}
 
 }

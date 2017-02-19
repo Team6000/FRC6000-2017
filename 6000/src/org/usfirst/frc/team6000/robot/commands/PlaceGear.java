@@ -39,15 +39,25 @@ public class PlaceGear extends Command{
 	    protected void initialize() {
 	    	System.out.println("Running PlaceGear");
 
-			//CvSource outputStream = CameraServer.getInstance().putVideo("Rectangle", 640, 480);
-			Robot.cvSink.grabFrame(source);
-			Robot.pipeline.process(source);
-	    	
-			System.out.println(Robot.pipeline.filterLinesOutput);
+	    	new Thread(() -> {
+                while(!Thread.interrupted()) {
+                	Robot.cvSink.grabFrame(source);
+        			Robot.pipeline.process(source);
+                    Robot.imgOutput.putFrame(Robot.pipeline.hsvThresholdOutput());
+                    System.out.println("Running the thread.  KEEP TRACK OF THIS SHIT");
+                }
+            }).start();
+			
+			if(Robot.pipeline.findLinesOutput().size() != 0){
+				System.out.println(Robot.pipeline.filterLinesOutput.get(0));
+			}
+			else{
+				System.out.println("ERROR: Lines output is 0.  SHIT!!!");
+			}
 			
 	    	alignAngle = Robot.imgRec.alignCenter();
 	    	disToTarget = Robot.imgRec.distanceToTarget();
-	    	Robot.driveTrain.rotate(alignAngle);
+//	    	Robot.driveTrain.rotate(alignAngle);
 	    	// driveTrain.rotate should call the method to drive forward after it runs fully
 	    	System.out.println(alignAngle + " , " + disToTarget);
 	    }
@@ -56,13 +66,6 @@ public class PlaceGear extends Command{
 	    protected void execute() {
 	    	// Check if the whole process is done and then call isFinished().
 	    	this.isFinished();
-
-	    	// rotate the robot to have it facing the center of the tapes
-	    	Robot.driveTrain.rotate(alignAngle);
-	    	// Get the distance to travel with imgRec
-	    	// distanceToTarget returns a value in INCHES
-	    	// Drive forward to place gear, wait for a few seconds, then drive back
-	    	disToTarget = Robot.imgRec.distanceToTarget();
 	    }
 
 	    // Make this return true when this Command no longer needs to run execute()

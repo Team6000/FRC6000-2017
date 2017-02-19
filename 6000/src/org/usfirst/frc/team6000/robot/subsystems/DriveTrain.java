@@ -95,18 +95,18 @@ public class DriveTrain extends Subsystem {
 		
 	}
 	
-//	public void pidDrive(double leftOutput, Trajectory rightOutput) {
-////		Waypoint[] points = new Waypoint[] { new Waypoint(-4, -1, Pathfinder.d2r(-45)),  
-////				new Waypoint(-2, -2, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-////				new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
-////		};
+	public void pidDrive(double leftOutput, Trajectory rightOutput) {
+//		Waypoint[] points = new Waypoint[] { new Waypoint(-4, -1, Pathfinder.d2r(-45)),  
+//				new Waypoint(-2, -2, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+//				new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+//		};
 //
-////		Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC,
-////		   Trajectory.Config.SAMPLES_FAST, 0.05, 3.07, 2.0, 60.0);
-////		Trajectory trajectory = Pathfinder.generate(points, config);
-////		TankModifier modifier = new TankModifier(trajectory).modify(0.68);
-////		Trajectory leftT = modifier.getLeftTrajectory(); // Get the Left Side
-////		Trajectory rightT = modifier.getRightTrajectory(); // Get the Right Side
+//		Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC,
+//		   Trajectory.Config.SAMPLES_FAST, 0.05, 3.07, 2.0, 60.0);
+//		Trajectory trajectory = Pathfinder.generate(points, config);
+//		TankModifier modifier = new TankModifier(trajectory).modify(0.68);
+//		Trajectory leftT = modifier.getLeftTrajectory(); // Get the Left Side
+//		Trajectory rightT = modifier.getRightTrajectory(); // Get the Right Side
 //		
 //		/*creates Encoder Followers. 
 //		To get your robot to follow a trajectory, you can use the EncoderFollower object. 
@@ -151,8 +151,8 @@ public class DriveTrain extends Subsystem {
 //				rightDrive.set(rightOutput - turn);
 //
 //		
-//
-//	}
+
+	}
 
 	public void initDefaultCommand() {
 		// Set the default command for a subsystem here.

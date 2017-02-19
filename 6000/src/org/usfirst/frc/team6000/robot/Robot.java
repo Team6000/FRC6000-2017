@@ -62,6 +62,7 @@ public class Robot extends IterativeRobot {
     
     public static UsbCamera camera; 
 	public static CvSink cvSink;
+	public static CvSource imgOutput;
     
     private static final int IMG_WIDTH = 320;
 	private static final int IMG_HEIGHT = 240;
@@ -88,6 +89,7 @@ public class Robot extends IterativeRobot {
     	camera = CameraServer.getInstance().startAutomaticCapture();
     	camera.setResolution(640, 480);
     	cvSink = CameraServer.getInstance().getVideo();
+    	imgOutput = CameraServer.getInstance().putVideo("testOutput", 640, 480);
     }
 	
 	/**
@@ -150,6 +152,11 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        
+    }
+    
+    public void runPipeline() {
+    	
     }
     
     /**

@@ -1,16 +1,16 @@
 package org.usfirst.frc.team6000.robot;
 
 import org.usfirst.frc.team6000.robot.commands.IntakeBalls;
-import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
+//import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
 import org.usfirst.frc.team6000.robot.commands.PlaceGear;
 import org.usfirst.frc.team6000.robot.commands.Shoot;
 import org.usfirst.frc.team6000.robot.commands.StopIntake;
-import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
-
+import org.usfirst.frc.team6000.robot.commands.StopShoot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -59,15 +59,18 @@ public class OI {
     // until it is finished as determined by it's isFinished method.
     // button.whenReleased(new ExampleCommand());
 	public OI(){
-
+//
 		shootButton.whileHeld(new Shoot());
 		intakeButton.whileHeld(new IntakeBalls());
+		shootButton.whenReleased(new StopShoot());
 
 		intakeButton.whenReleased(new StopIntake());
 		
 		placeGearBtn.whenPressed(new PlaceGear());
+		
+		SmartDashboard.putData("PlaceGear", new PlaceGear());
 
-		runPIDButton.whenPressed(new PathfinderTest());
+//		runPIDButton.whenPressed(new PathfinderTest());
 
 	}
 }

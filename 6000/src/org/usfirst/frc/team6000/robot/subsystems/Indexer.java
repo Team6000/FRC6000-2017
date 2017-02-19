@@ -15,7 +15,7 @@ public class Indexer extends Subsystem {
 	private Spark indexMotor = new Spark(RobotMap.indexerPort);
 	
 	public void stopBalls(){
-		indexMotor.set(-0.6);
+		indexMotor.set(-1.0);
 	}
 	
 	public void stopMotor(){
@@ -23,7 +23,7 @@ public class Indexer extends Subsystem {
 	}
 	
 	public void indexBalls(){
-		indexMotor.set(0.6);
+		indexMotor.set(1.0);
 	}
 	
 	
