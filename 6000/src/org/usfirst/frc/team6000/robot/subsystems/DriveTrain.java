@@ -39,7 +39,7 @@ public class DriveTrain extends Subsystem {
 	public DriveTrain() {		
 		gyro = Robot.ahrs; 
 		
-		// THIS SHIT IS MESSED UP
+		// THIS IS MESSED UP
 		
 		leftWheelEncoder.setMaxPeriod(0.1);
 		leftWheelEncoder.setMinRate(10);

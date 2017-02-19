@@ -25,8 +25,8 @@ public class OI {
     // number it is.
     // Joystick stick = new Joystick(port);
     // Button button = new JoystickButton(stick, buttonNumber);
-	public static Joystick leftStick = new Joystick(0);
-	public static Joystick rightStick = new Joystick(1);
+	public static Joystick leftStick = new Joystick(2);
+	public static Joystick rightStick = new Joystick(2);
 	public static Joystick secondaryStick = new Joystick(2);
 	
 	//public static Button shootButton = new JoystickButton(rightStick, 2);
@@ -35,8 +35,8 @@ public class OI {
 	
 	public static Button shootButton = new JoystickButton(secondaryStick, 2);
 	public static Button intakeButton = new JoystickButton(secondaryStick, 1);
-//	public static Button placeGearBtn = new JoystickButton(secondaryStick, 3);
-//	public static Button stopPlaceGearBtn = new JoystickButton(secondaryStick, 4);
+	public static Button placeGearBtn = new JoystickButton(secondaryStick, 3);
+	public static Button stopPlaceGearBtn = new JoystickButton(secondaryStick, 4);
     // There are a few additional built in buttons you can use. Additionally,
     // by subclassing Button you can create custom triggers and bind those to
     // commands the same as any other Button.
@@ -64,8 +64,8 @@ public class OI {
 		intakeButton.whileHeld(new IntakeBalls());
 		intakeButton.whenReleased(new StopIntake());
 		
-//		placeGearBtn.whenPressed(new PlaceGear());
-//		stopPlaceGearBtn.whenPressed();
+		placeGearBtn.whenPressed(new PlaceGear());
+		
 		
 //		runPIDButton.whenPressed(new PathfinderTest());
 	}

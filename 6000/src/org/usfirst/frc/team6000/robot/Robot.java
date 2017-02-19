@@ -12,11 +12,9 @@ import org.usfirst.frc.team6000.robot.subsystems.CameraData;
 //import org.usfirst.frc.team6000.robot.subsystems.Climber;
 //import org.usfirst.frc.team6000.robot.subsystems.GearGrabber;
 import org.usfirst.frc.team6000.robot.subsystems.Intake;
+import org.usfirst.frc.team6000.robot.subsystems.PiplelieOne;
 
 import org.usfirst.frc.team6000.robot.subsystems.Climber;
-
-import org.usfirst.frc.team6000.robot.subsystems.Intake;
-
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -28,14 +26,17 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.CameraServer;
-
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
-
+import edu.wpi.first.wpilibj.vision.VisionThread;
+import edu.wpi.first.wpilibj.vision.VisionRunner;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
+
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -52,29 +53,41 @@ public class Robot extends IterativeRobot {
 	public static final Indexer indexer = new Indexer();
 	public static OI oi;
 	public static final ImageRecognition imgRec = new ImageRecognition();
+	public static final PiplelieOne pipeline = new PiplelieOne();
 //	public static final CameraData cmData = new CameraData();
 
     Command autonomousCommand;
     SendableChooser chooser;
     public static AHRS ahrs;
+    
+    public static UsbCamera camera; 
+	public static CvSink cvSink;
+    
+    private static final int IMG_WIDTH = 320;
+	private static final int IMG_HEIGHT = 240;
 
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
      */
+    
+	@Override
     public void robotInit() {
 		oi = new OI();
         chooser = new SendableChooser();
+        
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
-        CameraServer.getInstance().startAutomaticCapture();
         
-
         try {
 			ahrs =  new AHRS(SPI.Port.kMXP);
 		} catch (RuntimeException ex) {
 			 DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 		}
+    	
+    	camera = CameraServer.getInstance().startAutomaticCapture();
+    	camera.setResolution(640, 480);
+    	cvSink = CameraServer.getInstance().getVideo();
     }
 	
 	/**

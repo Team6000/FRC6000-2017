@@ -1,51 +1,67 @@
 package org.usfirst.frc.team6000.robot.commands;
 
+import org.opencv.core.Mat;
 import org.usfirst.frc.team6000.robot.Robot;
+
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+
 
 
 public class PlaceGear extends Command{
 
 	public double alignAngle = 0;
 	public double disToTarget = 0;
+	Mat source = new Mat();
+	
+	
 	
 	public PlaceGear() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
 		//requires(Robot.shooter);
-//		requires(Robot.driveTrain);
+		requires(Robot.driveTrain);
 		requires(Robot.imgRec);
     }
 
+	
+	
 		// Called just before this Command runs the first time
 	    protected void initialize() {
+	    	System.out.println("Running PlaceGear");
 
+			//CvSource outputStream = CameraServer.getInstance().putVideo("Rectangle", 640, 480);
+			Robot.cvSink.grabFrame(source);
+			Robot.pipeline.process(source);
+	    	
+			System.out.println(Robot.pipeline.filterLinesOutput);
+			
+	    	alignAngle = Robot.imgRec.alignCenter();
+	    	disToTarget = Robot.imgRec.distanceToTarget();
+	    	Robot.driveTrain.rotate(alignAngle);
+	    	// driveTrain.rotate should call the method to drive forward after it runs fully
+	    	System.out.println(alignAngle + " , " + disToTarget);
 	    }
 
 	    // Called repeatedly when this Command is scheduled to run
 	    protected void execute() {
-	    	/* Steps:
-	    	 * 
-	    	 * Check distance
-	    	 * - If too far move forward
-	    	 * - If at optimal distance and aligned place gear
-	    	 * 
-	    	 */
-	    	alignAngle = Robot.imgRec.alignCenter();
+	    	// Check if the whole process is done and then call isFinished().
 	    	
-	    	// rotate the robot to have it facing the center of the tapes
-//	    	Robot.driveTrain.rotate(alignAngle);
-	    	// Get the distance to travel with imgRec
-	    	// distanceToTarget returns a value in INCHES
-	    	// Drive forward to place gear, wait for a few seconds, then drive back
-	    	disToTarget = Robot.imgRec.distanceToTarget();
-	    	
-	    	
+	    	this.isFinished();
 	    }
 
 	    // Make this return true when this Command no longer needs to run execute()
 	    protected boolean isFinished() {
-	        return false;
+	        return true;
 	    }
 
 	    // Called once after isFinished returns true
