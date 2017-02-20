@@ -31,7 +31,7 @@ public class PiplelieOne implements VisionPipeline {
 	private Mat blurOutput = new Mat();
 	private Mat hsvThresholdOutput = new Mat();
 	private Mat cvErodeOutput = new Mat();
-	private ArrayList<Line> findLinesOutput = new ArrayList<Line>();
+	public ArrayList<Line> findLinesOutput = new ArrayList<Line>();
 	public ArrayList<Line> filterLinesOutput = new ArrayList<Line>();
 
 	static {

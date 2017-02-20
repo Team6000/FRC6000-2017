@@ -54,7 +54,7 @@ public class Robot extends IterativeRobot {
 	public static OI oi;
 	public static final ImageRecognition imgRec = new ImageRecognition();
 	public static final PiplelieOne pipeline = new PiplelieOne();
-//	public static final CameraData cmData = new CameraData();
+	public static final CameraData cmData = new CameraData();
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -63,9 +63,9 @@ public class Robot extends IterativeRobot {
     public static UsbCamera camera; 
 	public static CvSink cvSink;
 	public static CvSource imgOutput;
+	public static Mat source = new Mat();
     
-    private static final int IMG_WIDTH = 320;
-	private static final int IMG_HEIGHT = 240;
+    VisionThread visionThread;
 
     /**
      * This function is run when the robot is first started up and should be
@@ -89,7 +89,8 @@ public class Robot extends IterativeRobot {
     	camera = CameraServer.getInstance().startAutomaticCapture();
     	camera.setResolution(640, 480);
     	cvSink = CameraServer.getInstance().getVideo();
-    	imgOutput = CameraServer.getInstance().putVideo("testOutput", 640, 480);
+//    	imgOutput = CameraServer.getInstance().putVideo("testOutput", 640, 480);
+    	
     }
 	
 	/**

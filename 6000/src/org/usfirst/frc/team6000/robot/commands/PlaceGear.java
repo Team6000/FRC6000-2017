@@ -21,9 +21,6 @@ public class PlaceGear extends Command{
 
 	public double alignAngle = 0;
 	public double disToTarget = 0;
-	Mat source = new Mat();
-	
-	
 	
 	public PlaceGear() {
         // Use requires() here to declare subsystem dependencies
@@ -38,28 +35,30 @@ public class PlaceGear extends Command{
 		// Called just before this Command runs the first time
 	    protected void initialize() {
 	    	System.out.println("Running PlaceGear");
-
-	    	new Thread(() -> {
-                while(!Thread.interrupted()) {
-                	Robot.cvSink.grabFrame(source);
-        			Robot.pipeline.process(source);
-                    Robot.imgOutput.putFrame(Robot.pipeline.hsvThresholdOutput());
-                    System.out.println("Running the thread.  KEEP TRACK OF THIS SHIT");
-                }
-            }).start();
+	    	System.out.println(Robot.source);
+	    	Robot.cvSink.grabFrame(Robot.source);
+	    	System.out.println(Robot.source);
+	    	Robot.pipeline.process(Robot.source);
+	    	System.out.println(Robot.pipeline.hsvThresholdOutput());
+	    	
 			
-			if(Robot.pipeline.findLinesOutput().size() != 0){
-				System.out.println(Robot.pipeline.filterLinesOutput.get(0));
+			if(Robot.pipeline.findLinesOutput.size() != 0){
+				Robot.cmData.doProcess();
+				Robot.imgRec.loadCameraData();
 			}
 			else{
 				System.out.println("ERROR: Lines output is 0.  SHIT!!!");
 			}
 			
-	    	alignAngle = Robot.imgRec.alignCenter();
-	    	disToTarget = Robot.imgRec.distanceToTarget();
+			Robot.cmData.doProcess();
+			Robot.imgRec.loadCameraData();
+			
+//	    	alignAngle = Robot.imgRec.alignCenter();
+//	    	disToTarget = Robot.imgRec.distanceToTarget();
 //	    	Robot.driveTrain.rotate(alignAngle);
 	    	// driveTrain.rotate should call the method to drive forward after it runs fully
-	    	System.out.println(alignAngle + " , " + disToTarget);
+	    	System.out.println(alignAngle);
+	    	System.out.println(disToTarget);
 	    }
 
 	    // Called repeatedly when this Command is scheduled to run

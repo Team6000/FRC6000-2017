@@ -3,6 +3,8 @@ package org.usfirst.frc.team6000.robot.subsystems;
 //import com.ni.vision.NIVision.Point;
 import java.awt.Point;
 
+import org.usfirst.frc.team6000.robot.Robot;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import java.awt.Point;
 
@@ -14,8 +16,8 @@ public class ImageRecognition extends Subsystem {
 	double centerToTape = 0;
 
 	// MEASURE DISTANCE FROM CENTER OF ROBOT TO CAMERA AND CUTOFF DISTANCE
-	static double RADIUS = 0;
-	static double SCREEN_WIDTH = 1280;
+	static double RADIUS = 13;
+	static double SCREEN_WIDTH = 640;
 	static double VERTICAL_VIEW_ANGLE = 19.02;
 
 	protected void initDefaultCommand() {
@@ -36,9 +38,9 @@ public class ImageRecognition extends Subsystem {
 	
 	// Loads Camera Data and sets variables for the dimensions.
 	public void loadCameraData() {
-		CameraData camera = new CameraData();
+//		CameraData camera = new CameraData();
 		
-		if (!camera.pointedAtGrip()) return;
+		if (!Robot.cmData.pointedAtGrip()) return;
 		
 		/*
 		 *       p1---------p2          p5---------p6
@@ -62,14 +64,14 @@ public class ImageRecognition extends Subsystem {
 		 */
 		
 		Point P1,P2,P3,P4,P5,P6,P7,P8;
-		P1 = camera.getP1();
-		P2 = camera.getP2();
-		P3 = camera.getP3();
-		P4 = camera.getP4();
-		P5 = camera.getP5();
-		P6 = camera.getP6();
-		P7 = camera.getP7();
-		P8 = camera.getP8();
+		P1 = Robot.cmData.getP1();
+		P2 = Robot.cmData.getP2();
+		P3 = Robot.cmData.getP3();
+		P4 = Robot.cmData.getP4();
+		P5 = Robot.cmData.getP5();
+		P6 = Robot.cmData.getP6();
+		P7 = Robot.cmData.getP7();
+		P8 = Robot.cmData.getP8();
 		
 		//center is the center of all the tape
 		Point center = new Point();
@@ -77,7 +79,7 @@ public class ImageRecognition extends Subsystem {
 		
 		//screenCenter is center of screen
 		Point screenCenter = new Point();
-		screenCenter.setLocation(camera.CAM_WIDTH()/2,camera.CAM_WIDTH()/2);
+		screenCenter.setLocation(Robot.cmData.CAM_WIDTH()/2,Robot.cmData.CAM_WIDTH()/2);
 		
 		this.centerToTape = findDistance(center,screenCenter); 
 		this.tapeHeight = (P2.getY() - P4.getY() + P5.getY() - P7.getY())/2;
