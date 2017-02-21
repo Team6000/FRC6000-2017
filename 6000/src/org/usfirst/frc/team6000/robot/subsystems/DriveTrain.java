@@ -8,6 +8,7 @@ import org.usfirst.frc.team6000.robot.commands.TankDrive;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -32,9 +33,9 @@ public class DriveTrain extends Subsystem {
 	double currentError = 0, previousError = 0, sumError = 0, slopeError = 0;
 	
 	private Encoder leftWheelEncoder = new Encoder(RobotMap.leftEncoderPortA, 
-			RobotMap.leftEncoderPortB);
+			RobotMap.leftEncoderPortB, false, CounterBase.EncodingType.k4X);
 	private Encoder rightWheelEncoder = new Encoder(RobotMap.rightEncoderPortA, 
-			RobotMap.rightEncoderPortB);	
+			RobotMap.rightEncoderPortB, false, CounterBase.EncodingType.k4X);	
 	
 	public DriveTrain() {		
 		gyro = Robot.ahrs; 
