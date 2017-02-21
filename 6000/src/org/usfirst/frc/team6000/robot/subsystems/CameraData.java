@@ -246,56 +246,51 @@ public class CameraData {
 	
 	public CPoint getP1(){
 		CPoint P1 = new CPoint();
-		P1.x = (int) lineX1;
-		P1.y = (int) max1;
+		P1.x = lineX1;
+		P1.y = max1;
 		return P1;
 	}
 	public CPoint getP2(){
 		CPoint P2 = new CPoint();
-		P2.x = (int) lineX2;
-		P2.y = (int) max2;
+		P2.x = lineX2;
+		P2.y = max2;
 		return P2;
 	}
 	public CPoint getP3(){
 		CPoint P3 = new CPoint();
-		P3.x = (int) lineX1;
-		P3.y = (int) min1;
+		P3.x = lineX1;
+		P3.y = min1;
 		return P3;
 	}
 	public CPoint getP4(){
 		CPoint P4 = new CPoint();
-		P4.x = (int) lineX2;
-		P4.y = (int) min2;
+		P4.x = lineX2;
+		P4.y = min2;
 		return P4;
 	}
 	public CPoint getP5(){
 		CPoint P5 = new CPoint();
-		P5.x = (int) lineX3;
-		P5.y = (int) max3;
+		P5.x = lineX3;
+		P5.y = max3;
 		return P5;
 	}
 	public CPoint getP6(){
 		CPoint P6 = new CPoint();
-		P6.x = (int) lineX4;
-		P6.y = (int) max4;
+		P6.x = lineX4;
+		P6.y = max4;
 		return P6;
 	}
 	public CPoint getP7(){
 		CPoint P7 = new CPoint();
-		P7.x = (int) lineX3;
-		P7.y = (int) min3;
+		P7.x = lineX3;
+		P7.y = min3;
 		return P7;
 		
 	}
 	public CPoint getP8(){
 		CPoint P8 = new CPoint();
-		P8.x = (int) lineX4;
-		P8.y = (int) min4;
+		P8.x = lineX4;
+		P8.y = min4;
 		return P8;
-		
-	}
-
-	public int CAM_WIDTH(){
-		return 1280;
 	}
 }

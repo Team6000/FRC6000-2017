@@ -13,7 +13,6 @@ public class ImageRecognition extends Subsystem {
 	double angAlign = 0;
 	double centerToTape = 0;
 
-	// MEASURE DISTANCE FROM CENTER OF ROBOT TO CAMERA AND CUTOFF DISTANCE
 	static double RADIUS = 13;
 	static double SCREEN_WIDTH = 640;
 	static double VERTICAL_VIEW_ANGLE = 19.02;
@@ -49,29 +48,29 @@ public class ImageRecognition extends Subsystem {
 		 * 
 		 */
 		
-		CPoint P2,P3,P4,P5,P6,P7,P8;
+		CPoint P2,P4,P5,P7;
 //		P1 = Robot.cmData.getP1();
 		P2 = Robot.cmData.getP2();
-		P3 = Robot.cmData.getP3();
+//		P3 = Robot.cmData.getP3();
 		P4 = Robot.cmData.getP4();
 		P5 = Robot.cmData.getP5();
-		P6 = Robot.cmData.getP6();
+//		P6 = Robot.cmData.getP6();
 		P7 = Robot.cmData.getP7();
-		P8 = Robot.cmData.getP8();
+//		P8 = Robot.cmData.getP8();
 		
 		//center is the center of all the tape
 		CPoint center = new CPoint();
 		
-		center.x = (P2.x+P5.y)/2;
-		center.y = (P2.x+P4.y)/2;
+		center.x = (P2.x+P5.x)/2;
+		center.y = (P2.y+P4.y)/2;
 		
 		//screenCenter is center of screen
 		CPoint screenCenter = new CPoint();
-		screenCenter.x = 640/2;
-		screenCenter.y = 480/2;
+		screenCenter.x = 320;
+		screenCenter.y = 240;
 		
-		this.centerToTape = Robot.cmData.findDistance(center,screenCenter); 
-		this.tapeHeight = (P2.y - P4.y + P5.x - P7.y)/2;
+		centerToTape = Robot.cmData.findDistance(center,screenCenter); 
+		tapeHeight = ((P4.y - P2.y) + (P7.x - P5.y))/2;
 		//this.tapeWidth = (P6.getX() + P6.getX())/2 - (P7.getX() + P8.getX())/2;
 
 	}
@@ -102,7 +101,7 @@ public class ImageRecognition extends Subsystem {
 	public double distanceToTarget() {
 		double dis = 0;
 		
-		dis = (480/2)/Math.tan(Math.toRadians(VERTICAL_VIEW_ANGLE));
+		dis = (240)/(Math.tan(Math.toRadians(VERTICAL_VIEW_ANGLE)));
 		dis = convertToInches(dis);
 		
 		return dis;
