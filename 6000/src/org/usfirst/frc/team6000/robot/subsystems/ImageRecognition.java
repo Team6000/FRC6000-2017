@@ -102,7 +102,7 @@ public class ImageRecognition extends Subsystem {
 	public double distanceToTarget() {
 		double dis = 0;
 		
-		dis = (360)/Math.tan(Math.toRadians(VERTICAL_VIEW_ANGLE));
+		dis = (480/2)/Math.tan(Math.toRadians(VERTICAL_VIEW_ANGLE));
 		dis = convertToInches(dis);
 		
 		return dis;
@@ -111,14 +111,14 @@ public class ImageRecognition extends Subsystem {
 	// converts a length in the image from pixels to inches
 	public double convertToInches (double pix){
 		double ratio = 0;
-		ratio = tapeHeight/5;
+		ratio = 5/tapeHeight;
 		
 		return pix * ratio;
 	}
 	// converts a length in the image from inches to pixels
 	public double convertToPixels (double inches){
 		double ratio = 0;
-		ratio = 5/tapeHeight;
+		ratio = tapeHeight/5;
 		
 		return inches * ratio;
 	}
