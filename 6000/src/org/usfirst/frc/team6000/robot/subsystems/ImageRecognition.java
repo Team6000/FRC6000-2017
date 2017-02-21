@@ -1,12 +1,10 @@
 package org.usfirst.frc.team6000.robot.subsystems;
 
 //import com.ni.vision.NIVision.Point;
-import java.awt.Point;
-
+import org.usfirst.frc.team6000.robot.subsystems.CPoint;
 import org.usfirst.frc.team6000.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
-import java.awt.Point;
 
 public class ImageRecognition extends Subsystem {
 
@@ -22,18 +20,6 @@ public class ImageRecognition extends Subsystem {
 
 	protected void initDefaultCommand() {
 		
-	}
-	
-	// For autonomous
-	//find distance between two Points
-	private double findDistance(Point pt1, Point pt2){
-		double x1,x2,y1,y2;
-		x1 = pt1.getX();
-		y1 = pt1.getY();
-		x2 = pt2.getX();
-		y2 = pt2.getY();
-		
-		return Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
 	}
 	
 	// Loads Camera Data and sets variables for the dimensions.
@@ -63,8 +49,8 @@ public class ImageRecognition extends Subsystem {
 		 * 
 		 */
 		
-		Point P1,P2,P3,P4,P5,P6,P7,P8;
-		P1 = Robot.cmData.getP1();
+		CPoint P2,P3,P4,P5,P6,P7,P8;
+//		P1 = Robot.cmData.getP1();
 		P2 = Robot.cmData.getP2();
 		P3 = Robot.cmData.getP3();
 		P4 = Robot.cmData.getP4();
@@ -74,15 +60,18 @@ public class ImageRecognition extends Subsystem {
 		P8 = Robot.cmData.getP8();
 		
 		//center is the center of all the tape
-		Point center = new Point();
-		center.setLocation(((P2.getX()+P5.getX())/2),((P2.getY()+P4.getY()/2)));
+		CPoint center = new CPoint();
+		
+		center.x = (P2.x+P5.y)/2;
+		center.y = (P2.x+P4.y)/2;
 		
 		//screenCenter is center of screen
-		Point screenCenter = new Point();
-		screenCenter.setLocation(Robot.cmData.CAM_WIDTH()/2,Robot.cmData.CAM_WIDTH()/2);
+		CPoint screenCenter = new CPoint();
+		screenCenter.x = 640/2;
+		screenCenter.y = 480/2;
 		
-		this.centerToTape = findDistance(center,screenCenter); 
-		this.tapeHeight = (P2.getY() - P4.getY() + P5.getY() - P7.getY())/2;
+		this.centerToTape = Robot.cmData.findDistance(center,screenCenter); 
+		this.tapeHeight = (P2.y - P4.y + P5.x - P7.y)/2;
 		//this.tapeWidth = (P6.getX() + P6.getX())/2 - (P7.getX() + P8.getX())/2;
 
 	}

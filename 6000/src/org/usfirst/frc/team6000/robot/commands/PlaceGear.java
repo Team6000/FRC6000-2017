@@ -42,7 +42,8 @@ public class PlaceGear extends Command{
 	    	System.out.println(Robot.pipeline.hsvThresholdOutput());
 	    	
 			
-			if(Robot.pipeline.findLinesOutput.size() != 0){
+			if(Robot.pipeline.findLinesOutput().size() != 0){
+				System.out.println(Robot.pipeline.findLinesOutput().size());
 				Robot.cmData.doProcess();
 				Robot.imgRec.loadCameraData();
 			}
@@ -50,11 +51,8 @@ public class PlaceGear extends Command{
 				System.out.println("ERROR: Lines output is 0.  SHIT!!!");
 			}
 			
-			Robot.cmData.doProcess();
-			Robot.imgRec.loadCameraData();
-			
-//	    	alignAngle = Robot.imgRec.alignCenter();
-//	    	disToTarget = Robot.imgRec.distanceToTarget();
+	    	alignAngle = Robot.imgRec.alignCenter();
+	    	disToTarget = Robot.imgRec.distanceToTarget();
 //	    	Robot.driveTrain.rotate(alignAngle);
 	    	// driveTrain.rotate should call the method to drive forward after it runs fully
 	    	System.out.println(alignAngle);

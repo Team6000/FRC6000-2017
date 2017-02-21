@@ -1,6 +1,6 @@
 package org.usfirst.frc.team6000.robot.subsystems;
-import java.awt.Point;
 
+import org.usfirst.frc.team6000.robot.subsystems.CPoint;
 import org.usfirst.frc.team6000.robot.Robot;
 import org.usfirst.frc.team6000.robot.subsystems.Line;
 import java.util.*;
@@ -18,19 +18,13 @@ public class CameraData {
 //		countours = NetworkTable.getTable("GRIP/myLinesReport");
 	}
 	
-	public void doProcess(){
-		popLines();
-		segregateLines();
-		cutMedians();
-	}
-	
 	//find distance between two Points
-	private double findDistance(Point pt1, Point pt2){
+	public double findDistance(CPoint pt1, CPoint pt2){
 		double x1,x2,y1,y2;
-		x1 = pt1.getX();
-		y1 = pt1.getY();
-		x2 = pt2.getX();
-		y2 = pt2.getY();
+		x1 = pt1.x;
+		y1 = pt1.y;
+		x2 = pt2.x;
+		y2 = pt2.y;
 		
 		return Math.sqrt(Math.pow((x1-x2), 2) + Math.pow((y1-y2), 2));
 	}
@@ -61,7 +55,7 @@ public class CameraData {
 	
 	double[] defaultValue = new double[0];
 	
-	List<Line> checkLines = new ArrayList<>();
+	List<Line> checkLines;
 	
 	double max1 = 0;
 	double max2 = 0;
@@ -77,20 +71,39 @@ public class CameraData {
 	double lineX3 = 0;
 	double lineX4 = 0;
 	
+	public void doProcess(){
+		checkLines = new ArrayList<Line>();
+		popLines();
+		segregateLines();
+		cutMedians();
+		System.out.println("Max1: " + max1);
+		System.out.println("Max2: " + max2);
+		System.out.println("Max3: " + max3);
+		System.out.println("Max4: " + max4);
+		System.out.println("Min1: " + min1);
+		System.out.println("Min2: " + min2);
+		System.out.println("Min3: " + min3);
+		System.out.println("Min4: " + min4);
+	}
+	
 	public void popLines(){
-		for(int i=0;i<Robot.pipeline.findLinesOutput.size();i++){
+		for(int i=0;i<Robot.pipeline.findLinesOutput().size();i++){
 			Line l = new Line();
 			
-			l.x1 = Robot.pipeline.findLinesOutput.get(i).x1;
-			l.y1 = Robot.pipeline.findLinesOutput.get(i).y1;
-			l.x2 = Robot.pipeline.findLinesOutput.get(i).x1;
-			l.y2 = Robot.pipeline.findLinesOutput.get(i).y2;
+			l.x1 = Robot.pipeline.findLinesOutput().get(i).x1;
+			l.y1 = Robot.pipeline.findLinesOutput().get(i).y1;
+			l.x2 = Robot.pipeline.findLinesOutput().get(i).x2;
+			l.y2 = Robot.pipeline.findLinesOutput().get(i).y2;
 			
 			// Calculate slope
 			if(l.x1 != l.x2){
 				double slope = (l.y2-l.y1)/(l.x2-l.x1);
 				if(Math.abs(slope)>1){
 					l.alignment = 'v';
+//					System.out.println(i + ":" + l.x1);
+//					System.out.println(i + ":" + l.y1);
+//					System.out.println(i + ":" + l.x2);
+//					System.out.println(i + ":" + l.y2);
 				}
 				else if(Math.abs(slope)<1){
 					l.alignment = 'h';
@@ -101,37 +114,43 @@ public class CameraData {
 			}
 			// If the line is horizontal, throw it away and start again with another line
 			if(l.alignment == 'h'){
-				break;
 			}
 			else if (l.alignment == 'v'){
 				checkLines.add(l);
+				
+//				System.out.println("Vertical: " + (int) l.x1 + "," + (int) l.y1);
 			}
 			else{
 				System.out.println("The line is not set up correctly");
-				break;
 			}
 		}
 	}
 	
 	public void segregateLines(){
 		double cursor = 0;
-		double lineNumber = 0;
-		double leeWay = 15;
+		double lineNumber = 4;
+		double leeWay = 20;
+		System.out.println(checkLines.size());
 		for(int i = 0; i<checkLines.size(); i++){
-			cursor = checkLines.get(i).x1;
+			lineNumber = 4;
+			cursor = (int) checkLines.get(i).x1;
 			// Go through every single vertical line to see if it has three ahead of it
 			cursor += leeWay;
-			for(int j = 0; j<1280-checkLines.get(i).x1; j++){
+			for(int j = 0; j<ImageRecognition.SCREEN_WIDTH - checkLines.get(i).x1; j++){
 				cursor ++;
 				for (int k = 0; k<checkLines.size(); k++){
-					if(cursor == checkLines.get(k).x1){
-						lineNumber ++;
+					if(cursor == (int) checkLines.get(k).x1){
+						lineNumber --;
 						cursor += leeWay;
 						break;
+					}
+					else{
+						
 					}
 				}
 			}
 			checkLines.get(i).bigLine = lineNumber;
+//			System.out.println(lineNumber);
 		}
 	}
 	
@@ -140,14 +159,16 @@ public class CameraData {
 		double min = 720;
 		double lineX = 0;
 		for (int i = 1; i<5; i++){
+			max = 480;
+			min = 0;
 			
 			for (int j = 0; j<checkLines.size(); j++){
 				// if the lines being checked are in the same big line
 				if(checkLines.get(j).bigLine == i){
 					// set the max number to be the highest lines top point y value
-					if(checkLines.get(j).y1 > max || checkLines.get(j).y2 > max)
+					if(checkLines.get(j).y1 < max || checkLines.get(j).y2 < max)
 					{
-						if(checkLines.get(j).y1 > checkLines.get(j).y2){
+						if(checkLines.get(j).y1 < checkLines.get(j).y2){
 							lineX = checkLines.get(j).x1;
 							max = checkLines.get(j).y1;
 						}
@@ -157,8 +178,8 @@ public class CameraData {
 						}
 					}
 					
-					if(checkLines.get(j).y1 < min || checkLines.get(j).y2 < min){
-						if(checkLines.get(j).y1 < checkLines.get(j).y2){
+					if(checkLines.get(j).y1 > min || checkLines.get(j).y2 > min){
+						if(checkLines.get(j).y1 > checkLines.get(j).y2){
 							lineX = checkLines.get(j).x1;
 							min = checkLines.get(j).y1;
 						}
@@ -167,6 +188,9 @@ public class CameraData {
 							min = checkLines.get(j).y2;
 						}
 					}
+				}
+				else{
+					
 				}
 			}
 			// assign the values found to the global variables for P1-P8;
@@ -220,51 +244,51 @@ public class CameraData {
 	 * 
 	 */
 	
-	public Point getP1(){
-		Point P1 = new Point();
+	public CPoint getP1(){
+		CPoint P1 = new CPoint();
 		P1.x = (int) lineX1;
 		P1.y = (int) max1;
 		return P1;
 	}
-	public Point getP2(){
-		Point P2 = new Point();
+	public CPoint getP2(){
+		CPoint P2 = new CPoint();
 		P2.x = (int) lineX2;
 		P2.y = (int) max2;
 		return P2;
 	}
-	public Point getP3(){
-		Point P3 = new Point();
+	public CPoint getP3(){
+		CPoint P3 = new CPoint();
 		P3.x = (int) lineX1;
 		P3.y = (int) min1;
 		return P3;
 	}
-	public Point getP4(){
-		Point P4 = new Point();
+	public CPoint getP4(){
+		CPoint P4 = new CPoint();
 		P4.x = (int) lineX2;
 		P4.y = (int) min2;
 		return P4;
 	}
-	public Point getP5(){
-		Point P5 = new Point();
+	public CPoint getP5(){
+		CPoint P5 = new CPoint();
 		P5.x = (int) lineX3;
 		P5.y = (int) max3;
 		return P5;
 	}
-	public Point getP6(){
-		Point P6 = new Point();
+	public CPoint getP6(){
+		CPoint P6 = new CPoint();
 		P6.x = (int) lineX4;
 		P6.y = (int) max4;
 		return P6;
 	}
-	public Point getP7(){
-		Point P7 = new Point();
+	public CPoint getP7(){
+		CPoint P7 = new CPoint();
 		P7.x = (int) lineX3;
 		P7.y = (int) min3;
 		return P7;
 		
 	}
-	public Point getP8(){
-		Point P8 = new Point();
+	public CPoint getP8(){
+		CPoint P8 = new CPoint();
 		P8.x = (int) lineX4;
 		P8.y = (int) min4;
 		return P8;

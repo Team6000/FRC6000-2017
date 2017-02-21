@@ -44,8 +44,8 @@ public class PiplelieOne implements VisionPipeline {
 	@Override	public void process(Mat source0) {
 		// Step Blur0:
 		Mat blurInput = source0;
-		BlurType blurType = BlurType.get("Box Blur");
-		double blurRadius = 6.396397255562447;
+		BlurType blurType = BlurType.get("Gaussian Blur");
+		double blurRadius = 8;
 		blur(blurInput, blurType, blurRadius, blurOutput);
 
 		// Step HSV_Threshold0:
