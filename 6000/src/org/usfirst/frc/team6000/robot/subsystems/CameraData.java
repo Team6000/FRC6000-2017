@@ -76,14 +76,14 @@ public class CameraData {
 		popLines();
 		segregateLines();
 		cutMedians();
-		System.out.println("Max1: " + max1);
-		System.out.println("Max2: " + max2);
-		System.out.println("Max3: " + max3);
-		System.out.println("Max4: " + max4);
-		System.out.println("Min1: " + min1);
-		System.out.println("Min2: " + min2);
-		System.out.println("Min3: " + min3);
-		System.out.println("Min4: " + min4);
+		System.out.println("Max1: " + lineX1 + "," + max1);
+		System.out.println("Max2: " + lineX2 + "," + max2);
+		System.out.println("Max3: " + lineX3 + "," + max3);
+		System.out.println("Max4: " + lineX4 + "," + max4);
+		System.out.println("Min1: " + lineX1 + "," + min1);
+		System.out.println("Min2: " + lineX2 + "," + min2);
+		System.out.println("Min3: " + lineX3 + "," + min3);
+		System.out.println("Min4: " + lineX4 + "," + min4);
 	}
 	
 	public void popLines(){
@@ -244,24 +244,24 @@ public class CameraData {
 	 * 
 	 */
 	
-	public CPoint getP1(){
-		CPoint P1 = new CPoint();
-		P1.x = lineX1;
-		P1.y = max1;
-		return P1;
-	}
+//	public CPoint getP1(){
+//		CPoint P1 = new CPoint();
+//		P1.x = lineX1;
+//		P1.y = max1;
+//		return P1;
+//	}
 	public CPoint getP2(){
 		CPoint P2 = new CPoint();
 		P2.x = lineX2;
 		P2.y = max2;
 		return P2;
 	}
-	public CPoint getP3(){
-		CPoint P3 = new CPoint();
-		P3.x = lineX1;
-		P3.y = min1;
-		return P3;
-	}
+//	public CPoint getP3(){
+//		CPoint P3 = new CPoint();
+//		P3.x = lineX1;
+//		P3.y = min1;
+//		return P3;
+//	}
 	public CPoint getP4(){
 		CPoint P4 = new CPoint();
 		P4.x = lineX2;
@@ -274,12 +274,12 @@ public class CameraData {
 		P5.y = max3;
 		return P5;
 	}
-	public CPoint getP6(){
-		CPoint P6 = new CPoint();
-		P6.x = lineX4;
-		P6.y = max4;
-		return P6;
-	}
+//	public CPoint getP6(){
+//		CPoint P6 = new CPoint();
+//		P6.x = lineX4;
+//		P6.y = max4;
+//		return P6;
+//	}
 	public CPoint getP7(){
 		CPoint P7 = new CPoint();
 		P7.x = lineX3;
@@ -287,10 +287,10 @@ public class CameraData {
 		return P7;
 		
 	}
-	public CPoint getP8(){
-		CPoint P8 = new CPoint();
-		P8.x = lineX4;
-		P8.y = min4;
-		return P8;
-	}
+//	public CPoint getP8(){
+//		CPoint P8 = new CPoint();
+//		P8.x = lineX4;
+//		P8.y = min4;
+//		return P8;
+//	}
 }

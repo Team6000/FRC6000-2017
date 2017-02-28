@@ -34,6 +34,8 @@ public class PlaceGear extends Command{
 	
 		// Called just before this Command runs the first time
 	    protected void initialize() {
+	    	alignAngle = 0;
+	    	Robot.cvSink = CameraServer.getInstance().getVideo();
 	    	System.out.println("Running PlaceGear");
 //	    	System.out.println(Robot.source);
 	    	Robot.cvSink.grabFrame(Robot.source);
@@ -53,8 +55,8 @@ public class PlaceGear extends Command{
 		    	disToTarget = Robot.imgRec.distanceToTarget();
 //		    	Robot.driveTrain.rotate(alignAngle);
 		    	// driveTrain.rotate should call the method to drive forward after it runs fully
-		    	System.out.println((int) alignAngle);
-		    	System.out.println((int) disToTarget);
+		    	System.out.println(alignAngle);
+		    	System.out.println(disToTarget);
 			}
 			else{
 				System.out.println("ERROR: Lines output is 0");

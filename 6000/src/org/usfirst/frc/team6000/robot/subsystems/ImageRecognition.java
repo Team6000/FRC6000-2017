@@ -1,125 +1,154 @@
 package org.usfirst.frc.team6000.robot.subsystems;
 
 //import com.ni.vision.NIVision.Point;
-import org.usfirst.frc.team6000.robot.subsystems.CPoint;
-import org.usfirst.frc.team6000.robot.Robot;
+//import org.usfirst.frc.team6000.robot.subsystems.CPoint;
+//import org.usfirst.frc.team6000.robot.Robot;
+
+//import java.awt.Canvas;
+//import java.awt.Color;
+//import java.awt.FlowLayout;
+//import java.awt.Font;
+//import java.awt.FontMetrics;
+//import java.awt.Graphics;
+//import java.awt.Image;
+//import java.awt.List;
+//import java.awt.Rectangle;
+//import java.awt.Shape;
+//import java.awt.image.BufferedImage;
+//import java.awt.image.DataBufferByte;
+//import java.awt.image.ImageObserver;
+//import java.awt.image.WritableRaster;
+//import java.lang.reflect.Array;
+//import java.text.AttributedCharacterIterator;
+//import java.util.ArrayList;
+//import java.util.Iterator;
+//import java.util.Timer;
+//
+//import javax.swing.ImageIcon;
+//import javax.swing.JFrame;
+//import javax.swing.JLabel;
+//import javax.swing.JPanel;
+
+import org.opencv.core.Core;
+import org.opencv.core.Mat;
+//import org.opencv.core.MatOfPoint;
+//import org.opencv.core.Point;
+import org.opencv.core.Rect;
+//import org.opencv.core.Scalar;
+//import org.opencv.core.Size;
+import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
+import org.opencv.videoio.VideoCapture;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 
 public class ImageRecognition extends Subsystem {
 
-	double tapeHeight = 0;
-	double distance = 0;
-	double angAlign = 0;
-	double centerToTape = 0;
+//	Process for GRIP	
+	static LiftTracker tracker;
+	public static VideoCapture videoCapture;
+//	Constants for known variables
+	static Mat matOriginal;
+	public static final double OFFSET_TO_FRONT = 0;
+	public static final double CAMERA_WIDTH = 640;
+	public static final double DISTANCE_CONSTANT= 5745.6;
+	public static final double WIDTH_BETWEEN_TARGET = 9.25;
+	public static boolean shouldRun = true;
+	static NetworkTable table;
+	
+	
+	static double lengthBetweenContours;
+	static double distanceFromTarget;
+	static double lengthError;
+	static double[] centerX;
 
-	static double RADIUS = 13;
-	static double SCREEN_WIDTH = 640;
-	static double VERTICAL_VIEW_ANGLE = 19.02;
-
+	
+	static{ 
+		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+	}
+	
 	protected void initDefaultCommand() {
 		
 	}
 	
 	// Loads Camera Data and sets variables for the dimensions.
 	public void loadCameraData() {
-//		CameraData camera = new CameraData();
-		
-		if (!Robot.cmData.pointedAtGrip()) return;
-		
-		/*
-		 *       p1---------p2          p5---------p6
-		 *       |			|			|			|
-		 *       |			|			|			|
-		 *       |			|			|			|
-		 *       |			|			|			|
-		 *       |			|			|			|
-		 *       |          |           |			|
-		 *       |          |           |			|
-		 *       |          |           |			|
-		 *       |          |           |			|
-		 *       |          |           |			|
-		 *       |			|			|			|
-		 *       |			|			|			|
-		 *       |			|			|			|
-		 *       |			|			|			|
-		 *       |			|			|			|
-		 *       p3---------p4          p7---------p8
-		 * 
-		 */
-		
-		CPoint P2,P4,P5,P7;
-//		P1 = Robot.cmData.getP1();
-		P2 = Robot.cmData.getP2();
-//		P3 = Robot.cmData.getP3();
-		P4 = Robot.cmData.getP4();
-		P5 = Robot.cmData.getP5();
-//		P6 = Robot.cmData.getP6();
-		P7 = Robot.cmData.getP7();
-//		P8 = Robot.cmData.getP8();
-		
-		//center is the center of all the tape
-		CPoint center = new CPoint();
-		
-		center.x = (P2.x+P5.x)/2;
-		center.y = (P2.y+P4.y)/2;
-		
-		//screenCenter is center of screen
-		CPoint screenCenter = new CPoint();
-		screenCenter.x = 320;
-		screenCenter.y = 240;
-		
-		centerToTape = Robot.cmData.findDistance(center,screenCenter); 
-		tapeHeight = ((P4.y - P2.y) + (P7.x - P5.y))/2;
-		//this.tapeWidth = (P6.getX() + P6.getX())/2 - (P7.getX() + P8.getX())/2;
-
+//		opens up the camera stream and tries to load it
+		videoCapture = new VideoCapture();
+		tracker = new LiftTracker();
+//		videoCapture.open("http://roborio-6000-frc.local:1181/?action=stream");
+		videoCapture.open(1);
+		// change that to your team number boi("http://roborio-XXXX-frc.local:1181/?action=stream");
+		if(!videoCapture.isOpened()){
+			System.out.println("Didn't open Camera, restart jar");
+		}
+//		time to actually process the acquired images
+		else if(videoCapture.isOpened()){
+			processImage();
+		}
 	}
-
-	
-	/*
-	  Aligns robot to have to look at the center of tapes.  Essentially you should be staring right at the peg.
-	  angAlign is alpha in the diagram.
-	  centerToTape is the pixel distance from the center of the image to the center of the tapes.
-	  screenWidth is the width of the image in pixels.
-	  30 is half the horizontal viewing angle
-	  radius is the distance from the center of the robot to the 
-	*/
-
-	public double alignCenter() {
-		RADIUS = convertToPixels(RADIUS);
-		angAlign = Math.atan((centerToTape*(Math.tan(Math.toRadians(30))))/((SCREEN_WIDTH/2)+RADIUS*(Math.tan(Math.toRadians(30)))));
-		angAlign = Math.toDegrees(angAlign);
-		return angAlign;
+	public static void processImage(){
+		System.out.println("Processing Started");
+		 matOriginal = new Mat();
+		 
+		//System.out.println("Hey I'm Processing Something!");
+		videoCapture.read(matOriginal);
+		tracker.process(matOriginal);
+		returnCenterX();
+		System.out.println("Angle: " + getAngle());
+		System.out.println("Distance: " + distanceFromTarget());
+		System.out.println("LengthBetweenContours: " + returnCenterX());
+		table.putNumber("distanceFromTarget", distanceFromTarget());
+		table.putNumber("angleFromGoal", getAngle());
+		table.putNumberArray("centerX", centerX);
+		videoCapture.read(matOriginal);
+		
+	}
+	public static double returnCenterX(){
+		double[] defaultValue = new double[0];
+			// This is the center value returned by GRIP thank WPI
+			if(!tracker.filterContoursOutput.isEmpty() && tracker.filterContoursOutput.size() >= 2){
+				Rect r = Imgproc.boundingRect(tracker.filterContoursOutput.get(1));
+				Rect r1 = Imgproc.boundingRect(tracker.filterContoursOutput.get(0)); 
+				centerX = new double[]{r1.x + (r1.width / 2), r.x + (r.width / 2)};
+				Imgcodecs.imwrite("output.png", matOriginal);
+				//System.out.println(centerX.length); //testing
+				// this again checks for the 2 shapes on the target
+				if(centerX.length == 2){
+					// subtracts one another to get length in pixels
+					lengthBetweenContours = Math.abs(centerX[0] - centerX[1]);
+				}
+			}
+		return lengthBetweenContours;
 	}
 	
-	/*
-	 * Uses the ratio of the tapeHeight and inches to get the distance from the camera to the target in pixels
-	 * Converts the distance in pixels to inches using the ratio from the tapeHeight
-	 * 360 is half the vertical pixels of the 720p camera
-	 */
-	
-	public double distanceToTarget() {
-		double dis = 0;
-		
-		dis = (240)/(Math.tan(Math.toRadians(VERTICAL_VIEW_ANGLE)));
-		dis = convertToInches(dis);
-		
-		return dis;
+	public static double distanceFromTarget(){
+		// distance costant divided by length between centers of contours
+		distanceFromTarget = DISTANCE_CONSTANT / lengthBetweenContours;
+		return distanceFromTarget - OFFSET_TO_FRONT; 
 	}
 	
-	// converts a length in the image from pixels to inches
-	public double convertToInches (double pix){
-		double ratio = 0;
-		ratio = 5/tapeHeight;
-		
-		return pix * ratio;
-	}
-	// converts a length in the image from inches to pixels
-	public double convertToPixels (double inches){
-		double ratio = 0;
-		ratio = tapeHeight/5;
-		
-		return inches * ratio;
-	}
+	public static double getAngle(){
+		// 9.25in is for the distance from center to center from goal, then divide by lengthBetweenCenters in pixels to get proportion
+		double constant = WIDTH_BETWEEN_TARGET / lengthBetweenContours;
+		double angleToGoal = 0;
+			//Looking for the 2 blocks to actually start trig
+		if(!tracker.filterContoursOutput.isEmpty() && tracker.filterContoursOutput.size() >= 2){
 
+			if(centerX.length == 2){
+				// this calculates the distance from the center of goal to center of webcam 
+				double distanceFromCenterPixels= ((centerX[0] + centerX[1]) / 2) - (CAMERA_WIDTH / 2);
+				// Converts pixels to inches using the constant from above.
+//				double distanceFromCenterInch = distanceFromCenterPixels * constant;
+				
+				// math brought to you by Jacob
+				angleToGoal = Math.atan((distanceFromCenterPixels * constant)/ (distanceFromTarget() + 13));
+				angleToGoal = Math.toDegrees(angleToGoal);
+				// prints angle
+				//System.out.println("Angle: " + angleToGoal);
+				}
+			}
+			return angleToGoal;
+	}
 }

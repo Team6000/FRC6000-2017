@@ -12,7 +12,7 @@ import org.usfirst.frc.team6000.robot.subsystems.CameraData;
 //import org.usfirst.frc.team6000.robot.subsystems.Climber;
 //import org.usfirst.frc.team6000.robot.subsystems.GearGrabber;
 import org.usfirst.frc.team6000.robot.subsystems.Intake;
-import org.usfirst.frc.team6000.robot.subsystems.PiplelieOne;
+//import org.usfirst.frc.team6000.robot.subsystems.PiplelieOne;
 
 import org.usfirst.frc.team6000.robot.subsystems.Climber;
 
@@ -54,7 +54,7 @@ public class Robot extends IterativeRobot {
 	public static final Indexer indexer = new Indexer();
 	public static OI oi;
 	public static final ImageRecognition imgRec = new ImageRecognition();
-	public static final PiplelieOne pipeline = new PiplelieOne();
+//	public static final PiplelieOne pipeline = new PiplelieOne();
 	public static final CameraData cmData = new CameraData();
 
     Command autonomousCommand;
@@ -88,8 +88,8 @@ public class Robot extends IterativeRobot {
 		}
     	
     	camera = CameraServer.getInstance().startAutomaticCapture();
-    	camera.setResolution(640, 480);
-    	cvSink = CameraServer.getInstance().getVideo();
+    	camera.setResolution(640, 360);
+    	
 //    	imgOutput = CameraServer.getInstance().putVideo("testOutput", 640, 480);
     	
     }
