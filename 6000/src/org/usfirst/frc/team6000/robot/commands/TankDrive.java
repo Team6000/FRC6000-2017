@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class TankDrive extends Command {
 	
-//	Joystick leftStick = OI.leftStick;
-//    Joystick rightStick = OI.rightStick;
+	Joystick leftStick = OI.leftStick;
+    Joystick rightStick = OI.rightStick;
 	
 
     public TankDrive() {
@@ -29,7 +29,7 @@ public class TankDrive extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    Robot.driveTrain.tankDrive(leftStick, rightStick);
+    	Robot.driveTrain.tankDrive(leftStick, rightStick);
     }
 
     // Make this return true when this Command no longer needs to run execute()

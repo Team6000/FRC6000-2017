@@ -1,11 +1,8 @@
 package org.usfirst.frc.team6000.robot;
 
-import org.usfirst.frc.team6000.robot.commands.IntakeBalls;
+//import org.usfirst.frc.team6000.robot.commands.IntakeBalls;
 //import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
 import org.usfirst.frc.team6000.robot.commands.PlaceGear;
-import org.usfirst.frc.team6000.robot.commands.Shoot;
-import org.usfirst.frc.team6000.robot.commands.StopIntake;
-import org.usfirst.frc.team6000.robot.commands.StopShoot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
@@ -24,19 +21,19 @@ public class OI {
     // Joystick stick = new Joystick(port);
     // Button button = new JoystickButton(stick, buttonNumber);
 
-	public static Joystick secondaryStick = new Joystick(2);
+//	public static Joystick secondaryStick = new Joystick(2);
 
 	public static Joystick leftStick = new Joystick(0);
 	public static Joystick rightStick = new Joystick(1);
 
 //	public static Button shootButton = new JoystickButton(rightStick, 2);
-
-	public static Button runPIDButton = new JoystickButton(rightStick, 1);
-
-	public static Button shootButton = new JoystickButton(secondaryStick, 2);
-	public static Button intakeButton = new JoystickButton(secondaryStick, 1);
-	public static Button placeGearBtn = new JoystickButton(secondaryStick, 3);
-	public static Button stopPlaceGearBtn = new JoystickButton(secondaryStick, 4);
+//
+	public static Button runRotateButton = new JoystickButton(rightStick, 3);
+//
+//	public static Button shootButton = new JoystickButton(secondaryStick, 2);
+//	public static Button intakeButton = new JoystickButton(secondaryStick, 1);
+//	public static Button placeGearBtn = new JoystickButton(secondaryStick, 3);
+//	public static Button stopPlaceGearBtn = new JoystickButton(secondaryStick, 4);
 
 //github.com/Team6000/FRC6000-2017.git
     // There are a few additional built in buttons you can use. Additionally,
@@ -60,17 +57,17 @@ public class OI {
     // button.whenReleased(new ExampleCommand());
 	public OI(){
 //
-		shootButton.whileHeld(new Shoot());
-		intakeButton.whileHeld(new IntakeBalls());
-		shootButton.whenReleased(new StopShoot());
+//		shootButton.whileHeld(new Shoot());
+//		intakeButton.whileHeld(new IntakeBalls());
+//		shootButton.whenReleased(new StopShoot());
 
-		intakeButton.whenReleased(new StopIntake());
+//		intakeButton.whenReleased(new StopIntake());
 		
-		placeGearBtn.whenPressed(new PlaceGear());
+//		placeGearBtn.whenPressed(new PlaceGear());
 		
 		SmartDashboard.putData("PlaceGear", new PlaceGear());
 
-//		runPIDButton.whenPressed(new PathfinderTest());
+		runRotateButton.whenPressed(new PlaceGear());
 
 	}
 }

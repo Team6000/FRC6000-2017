@@ -124,7 +124,7 @@ public class ImageRecognition extends Subsystem {
 	}
 	
 	public static double distanceFromTarget(){
-		// distance costant divided by length between centers of contours
+		// distance constant divided by length between centers of contours
 		distanceFromTarget = DISTANCE_CONSTANT / lengthBetweenContours;
 		return distanceFromTarget - OFFSET_TO_FRONT; 
 	}
@@ -142,7 +142,7 @@ public class ImageRecognition extends Subsystem {
 				// Converts pixels to inches using the constant from above.
 //				double distanceFromCenterInch = distanceFromCenterPixels * constant;
 				
-				// math brought to you by Jacob
+				// math
 				angleToGoal = Math.atan((distanceFromCenterPixels * constant)/ (distanceFromTarget() + 13));
 				angleToGoal = Math.toDegrees(angleToGoal);
 				// prints angle

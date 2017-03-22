@@ -27,46 +27,22 @@ public class PlaceGear extends Command{
         // eg. requires(chassis);
 		//requires(Robot.shooter);
 		requires(Robot.driveTrain);
-		requires(Robot.imgRec);
+//		requires(Robot.imgRec);
     }
 
 	
 	
 		// Called just before this Command runs the first time
 	    protected void initialize() {
-	    	alignAngle = 0;
-	    	Robot.cvSink = CameraServer.getInstance().getVideo();
-	    	System.out.println("Running PlaceGear");
-//	    	System.out.println(Robot.source);
-	    	Robot.cvSink.grabFrame(Robot.source);
-//	    	System.out.println(Robot.source);
-	    	Robot.pipeline.process(Robot.source);
-//	    	System.out.println(Robot.pipeline.hsvThresholdOutput());
-	    	
-			// Fail Safe:
-	    	// If PlaceGear is accidentally ran or the image is not picking up any lines, process will stop here
-			if(Robot.pipeline.findLinesOutput().size() != 0){
-				System.out.println("LinesSize: " + Robot.pipeline.findLinesOutput().size());
-				Robot.cmData.doProcess();
-				Robot.imgRec.loadCameraData();
-				
-		    	alignAngle = Robot.imgRec.alignCenter();
-		    	SmartDashboard.putNumber("AlignAngle", alignAngle);
-		    	disToTarget = Robot.imgRec.distanceToTarget();
-//		    	Robot.driveTrain.rotate(alignAngle);
-		    	// driveTrain.rotate should call the method to drive forward after it runs fully
-		    	System.out.println(alignAngle);
-		    	System.out.println(disToTarget);
-			}
-			else{
-				System.out.println("ERROR: Lines output is 0");
-			}
+	    	System.out.println("Place Gear");
 	    }
 
 	    // Called repeatedly when this Command is scheduled to run
 	    protected void execute() {
 	    	// Check if the whole process is done and then call isFinished().
 	    	// Makes the code only run once from the initialize() method
+	    	Robot.driveTrain.gyroReset();
+	    	Robot.driveTrain.rotate(90.0);
 	    	this.isFinished();
 	    }
 

@@ -19,16 +19,22 @@ public class PathfinderTest extends Command{
 	EncoderFollower rightEncoderFollower;
 	private AHRS gyro;
 
+	int position = 0;
+	
+	
     public PathfinderTest() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.driveTrain);
     	gyro = Robot.ahrs;
+//    	position = pos;
+
     }
 
 	    // Called just before this Command runs the first time
 	    protected void initialize() {
-	    	
+	    	Robot.driveTrain.getLeftWheelEncoder().reset();
+	    	Robot.driveTrain.getRightWheelEncoder().reset();
 	    	gyro.reset();
 	    	
 	    	/* Create an array of Waypoints. This array is passed to the pidDrive method
@@ -41,9 +47,12 @@ public class PathfinderTest extends Command{
 	    	
 	    	Waypoint[] points = new Waypoint[] { 
 	    	new Waypoint(0, 0, 0),  
-			new Waypoint(3, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-			new Waypoint(5, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+			new Waypoint(0.05, 0, Math.toRadians(45)), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+			new Waypoint(0.1, 0.1, Math.toRadians(90)) // Waypoint @ x=0, y=0, exit angle=0 radians
 	    	};
+	    	
+	    	// 1 Kody = 77 inches (kody and not codie because of Zev Kent)
+	    	
 			Trajectory.Config config = new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC,
 					   Trajectory.Config.SAMPLES_FAST, 0.05, 4.7, 0.5, 60.0);
 					Trajectory trajectory = Pathfinder.generate(points, config);
@@ -73,8 +82,8 @@ public class PathfinderTest extends Command{
 					// The fourth argument is the velocity ratio. This is 1 over the maximum velocity you provided in the 
 			        //trajectory configuration (it translates m/s to a -1 to 1 scale that your motors can read)
 					// The fifth argument is your acceleration gain. Tweak this if you want to get to a higher or lower speed quicker
-					leftEncoderFollower.configurePIDVA(1.0, 0.0, 0.0, 1 / 4.27, 0);
-					rightEncoderFollower.configurePIDVA(1.0, 0.0, 0.0, 1 / 4.27, 0);
+					leftEncoderFollower.configurePIDVA(0.8, 0.0, 0.0, 1 / 4.27, 0);
+					rightEncoderFollower.configurePIDVA(0.8, 0.0, 0.0, 1 / 4.27, 0);
 					
 //					for (int i = 0; i < trajectory.length(); i++) {
 //					    Trajectory.Segment seg = trajectory.get(i);
@@ -87,27 +96,38 @@ public class PathfinderTest extends Command{
 
 	    // Called repeatedly when this Command is scheduled to run
 	    protected void execute() {
+	    	System.out.println("Inside Execute Loop");
 	    	double leftOutput = leftEncoderFollower.calculate(Robot.driveTrain.getRightWheelEncoder().get()); 
 			//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
 			double rightOutput = rightEncoderFollower.calculate(Robot.driveTrain.getRightWheelEncoder().get());
 			//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
 	        double gyroHeading = gyro.getAngle();//FIND GYRO HEADING USING GYROSCOPE
 	        SmartDashboard.putNumber("getAngle", gyroHeading);
-	        SmartDashboard.putNumber("pidGet", gyro.pidGet());
+//	        SmartDashboard.putNumber("pidGet", gyro.pidGet());
 	        // Assuming the gyro is giving a value in degrees
 			double desiredHeading = Pathfinder.r2d(leftEncoderFollower.getHeading());  // Should also be in degrees
 			double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
-			double turn = 0.8 * (-1.0/80.0) * angleDifference;
+			double turn = 3 * (-1.0/80.0) * angleDifference;
+			SmartDashboard.putNumber("Turn", turn);
 	
-			Robot.driveTrain.rawDrive(leftOutput + turn, -(rightOutput - turn));
+//			while (Math.abs(Math.abs(leftOutput) - Math.abs(rightOutput)) >= 0.0001)
+//			{
+//				rightOutput += 0.0001;
+//			}
+			
+			Robot.driveTrain.rawDrive(leftOutput + turn, -rightOutput + turn);
 		    
-		    System.out.println("getAngle: " + gyroHeading);
-		    System.out.println("angleDifference: " + angleDifference);
-		    System.out.println("RightWheelEncoder.get(): " + Robot.driveTrain.getRightWheelEncoder().get());
-        System.out.println("LeftWheelEncoder.get(): " + Robot.driveTrain.getLeftWheelEncoder().get());
-		    System.out.println("turn: " + turn);
+//		    System.out.println("getAngle: " + gyroHeading);
+//		    System.out.println("angleDifference: " + angleDifference);
+//		    System.out.println("RightWheelEncoder.get(): " + Robot.driveTrain.getRightWheelEncoder().get());
+//        System.out.println("LeftWheelEncoder.get(): " + Robot.driveTrain.getLeftWheelEncoder().get());
+//		    System.out.println("turn: " + turn);
 		    System.out.println("leftOutput: " + leftOutput);
 		    System.out.println("rightOutput: " + rightOutput);
+		    SmartDashboard.putNumber("right Encoder", Robot.driveTrain.getRightWheelEncoder().getDistance());
+		    SmartDashboard.putNumber("left Encoder", Robot.driveTrain.getLeftWheelEncoder().getDistance());
+		    SmartDashboard.putNumber("left value", leftOutput);
+		    SmartDashboard.putNumber("right value", rightOutput);
 	    }
 
 	    // Make this return true when this Command no longer needs to run execute()
