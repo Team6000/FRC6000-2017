@@ -125,6 +125,9 @@ public class Robot extends IterativeRobot {
 		String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
 		
 		switch(autoSelected) {
+		case "0,0":
+			System.out.println("testing");
+			autonomousCommand = new PathfinderTest(0,0);
 		case "1,1":
 			System.out.println("pos1");
 			autonomousCommand = new PathfinderTest(1,1);
@@ -162,8 +165,8 @@ public class Robot extends IterativeRobot {
 			autonomousCommand = new PathfinderTest(3,3);
 			break;
 		default:
-			System.out.println("default");
-//			autonomousCommand = new PathfinderTest(1,3);
+			System.out.println("ERROR: No input in SmartDashboard for autonomous");
+			
 			break;
 		}
     	

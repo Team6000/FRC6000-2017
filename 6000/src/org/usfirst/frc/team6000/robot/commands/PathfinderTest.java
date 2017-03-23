@@ -21,6 +21,7 @@ public class PathfinderTest extends Command {
 
 	int position = 0;
 	int gearPos = 0;
+	double x1, x2, x3, y1, y2, y3, a1, a2, a3;
 
 	public PathfinderTest(int pos, int gear) {
 		// Use requires() here to declare subsystem dependencies
@@ -37,6 +38,30 @@ public class PathfinderTest extends Command {
 	    	Robot.driveTrain.getRightWheelEncoder().reset();
 	    	gyro.reset();
 	    	
+	    	SmartDashboard.putNumber("x1", 0);
+	    	SmartDashboard.putNumber("y1", 0);
+	    	SmartDashboard.putNumber("a1", 0);
+	    	
+	    	SmartDashboard.putNumber("x2", 0);
+	    	SmartDashboard.putNumber("y2", 0);
+	    	SmartDashboard.putNumber("a2", 0);
+	    	
+	    	SmartDashboard.putNumber("x3", 0);
+	    	SmartDashboard.putNumber("y3", 0);
+	    	SmartDashboard.putNumber("a3", 0);
+	    	
+	    	x1 = SmartDashboard.getNumber("x1", 0);
+	    	y1 = SmartDashboard.getNumber("y1", 0);
+	    	a1 = SmartDashboard.getNumber("a1", 0);
+	    	
+	    	x2 = SmartDashboard.getNumber("x2", 0);
+	    	y2 = SmartDashboard.getNumber("y2", 0);
+	    	a2 = SmartDashboard.getNumber("a2", 0);
+	    	
+	    	x3 = SmartDashboard.getNumber("x3", 0);
+	    	y3 = SmartDashboard.getNumber("y3", 0);
+	    	a3 = SmartDashboard.getNumber("a3", 0);
+	    	
 	    	/* Create an array of Waypoints. This array is passed to the pidDrive method
 	    	 * in order to chart a route. The first two elements of a Waypoint are the x and y
 	    	 * coordinates, and the last element is the exit angle (in radians). Use the .d2r
@@ -45,9 +70,9 @@ public class PathfinderTest extends Command {
 	    	 * (so it can be whatever you want). 
 	    	 */
 	    	Waypoint[] points = new Waypoint[] { 
-			    	new Waypoint(0, 0, 0),  
-					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+			    	new Waypoint(x1, y1, a1),  
+					new Waypoint(x2, y2, a2), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+					new Waypoint(x3, y3, a3) // Waypoint @ x=0, y=0, exit angle=0 radians
 			    	};
 	    	
 	    	switch(position){
