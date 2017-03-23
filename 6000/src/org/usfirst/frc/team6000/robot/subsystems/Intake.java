@@ -10,11 +10,11 @@ public class Intake extends Subsystem{
 	
 	protected void initDefaultCommand() {
 	}
-//	
-//	public void startIntake() {
-//		intake.set(0.75);
-//	}
-//	
+	
+	public void startIntake() {
+		intake.set(0.75);
+	}
+	
 	public void stopIntake() {
 		intake.set(0);
 	}

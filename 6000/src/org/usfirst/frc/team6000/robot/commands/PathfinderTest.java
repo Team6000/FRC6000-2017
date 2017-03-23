@@ -13,26 +13,26 @@ import jaci.pathfinder.Waypoint;
 import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
 
-public class PathfinderTest extends Command{
-	
+public class PathfinderTest extends Command {
+
 	EncoderFollower leftEncoderFollower;
 	EncoderFollower rightEncoderFollower;
 	private AHRS gyro;
 
 	int position = 0;
-	
-	
-    public PathfinderTest() {
-        // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	requires(Robot.driveTrain);
-    	gyro = Robot.ahrs;
-//    	position = pos;
+	int gearPos = 0;
 
-    }
+	public PathfinderTest(int pos, int gear) {
+		// Use requires() here to declare subsystem dependencies
+		// eg. requires(chassis);
+		requires(Robot.driveTrain);
+		gyro = Robot.ahrs;
+		position = pos;
+		gearPos = gear;
+	}
 
-	    // Called just before this Command runs the first time
-	    protected void initialize() {
+	// Called just before this Command runs the first time
+	protected void initialize() {
 	    	Robot.driveTrain.getLeftWheelEncoder().reset();
 	    	Robot.driveTrain.getRightWheelEncoder().reset();
 	    	gyro.reset();
@@ -44,12 +44,94 @@ public class PathfinderTest extends Command{
 	    	 * in degrees). The Pathfinder program assumes that you begin on the first coordinate
 	    	 * (so it can be whatever you want). 
 	    	 */
-	    	
 	    	Waypoint[] points = new Waypoint[] { 
-	    	new Waypoint(0, 0, 0),  
-			new Waypoint(0.05, 0, Math.toRadians(45)), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-			new Waypoint(0.1, 0.1, Math.toRadians(90)) // Waypoint @ x=0, y=0, exit angle=0 radians
-	    	};
+			    	new Waypoint(0, 0, 0),  
+					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+			    	};
+	    	
+	    	switch(position){
+	    	case 1:
+	    		switch(gearPos){
+	    		case 1:
+			    	points = new Waypoint[] { 
+			    	new Waypoint(0, 0, 0),  
+					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+			    	};
+			    	break;
+	    		case 2:
+	    			points = new Waypoint[] { 
+	    			    	new Waypoint(0, 0, 0),  
+	    					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+	    					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+	    			    	};
+	    			break;
+	    		case 3:
+	    			points = new Waypoint[] { 
+	    			    	new Waypoint(0, 0, 0),  
+	    					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+	    					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+	    			    	};
+	    			break;
+	    		default:
+	    			break;
+	    		}
+	    	case 2:
+	    		switch(gearPos){
+	    		case 1:
+			    	points = new Waypoint[] { 
+			    	new Waypoint(0, 0, 0),  
+					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+			    	};
+			    	break;
+	    		case 2:
+	    			points = new Waypoint[] { 
+	    			    	new Waypoint(0, 0, 0),  
+	    					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+	    					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+	    			    	};
+	    			break;
+	    		case 3:
+	    			points = new Waypoint[] { 
+	    			    	new Waypoint(0, 0, 0),  
+	    					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+	    					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+	    			    	};
+	    			break;
+	    		default:
+	    			break;
+	    		}
+	    	case 3:
+	    		switch(gearPos){
+	    		case 1:
+			    	points = new Waypoint[] { 
+			    	new Waypoint(0, 0, 0),  
+					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+			    	};
+			    	break;
+	    		case 2:
+	    			points = new Waypoint[] { 
+	    			    	new Waypoint(0, 0, 0),  
+	    					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+	    					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+	    			    	};
+	    			break;
+	    		case 3:
+	    			points = new Waypoint[] { 
+	    			    	new Waypoint(0, 0, 0),  
+	    					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+	    					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+	    			    	};
+	    			break;
+	    		default:
+	    			break;
+	    		}
+    		default:
+    			break;
+	    	}
 	    	
 	    	// 1 Kody = 77 inches (kody and not codie because of Zev Kent)
 	    	
@@ -94,55 +176,64 @@ public class PathfinderTest extends Command{
 //					}
 	    }
 
-	    // Called repeatedly when this Command is scheduled to run
-	    protected void execute() {
-	    	System.out.println("Inside Execute Loop");
-	    	double leftOutput = leftEncoderFollower.calculate(Robot.driveTrain.getRightWheelEncoder().get()); 
-			//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
-			double rightOutput = rightEncoderFollower.calculate(Robot.driveTrain.getRightWheelEncoder().get());
-			//Supposed to pass in current, cumulative position of encoder. DONT WHAT IT IS. using getDistance for right now
-	        double gyroHeading = gyro.getAngle();//FIND GYRO HEADING USING GYROSCOPE
-	        SmartDashboard.putNumber("getAngle", gyroHeading);
-//	        SmartDashboard.putNumber("pidGet", gyro.pidGet());
-	        // Assuming the gyro is giving a value in degrees
-			double desiredHeading = Pathfinder.r2d(leftEncoderFollower.getHeading());  // Should also be in degrees
-			double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
-			double turn = 3 * (-1.0/80.0) * angleDifference;
-			SmartDashboard.putNumber("Turn", turn);
-	
-//			while (Math.abs(Math.abs(leftOutput) - Math.abs(rightOutput)) >= 0.0001)
-//			{
-//				rightOutput += 0.0001;
-//			}
-			
-			Robot.driveTrain.rawDrive(leftOutput + turn, -rightOutput + turn);
-		    
-//		    System.out.println("getAngle: " + gyroHeading);
-//		    System.out.println("angleDifference: " + angleDifference);
-//		    System.out.println("RightWheelEncoder.get(): " + Robot.driveTrain.getRightWheelEncoder().get());
-//        System.out.println("LeftWheelEncoder.get(): " + Robot.driveTrain.getLeftWheelEncoder().get());
-//		    System.out.println("turn: " + turn);
-		    System.out.println("leftOutput: " + leftOutput);
-		    System.out.println("rightOutput: " + rightOutput);
-		    SmartDashboard.putNumber("right Encoder", Robot.driveTrain.getRightWheelEncoder().getDistance());
-		    SmartDashboard.putNumber("left Encoder", Robot.driveTrain.getLeftWheelEncoder().getDistance());
-		    SmartDashboard.putNumber("left value", leftOutput);
-		    SmartDashboard.putNumber("right value", rightOutput);
-	    }
+	// Called repeatedly when this Command is scheduled to run
+	protected void execute() {
+		System.out.println("Inside Execute Loop");
+		double leftOutput = leftEncoderFollower.calculate(Robot.driveTrain.getRightWheelEncoder().get());
+		// Supposed to pass in current, cumulative position of encoder. DONT
+		// WHAT IT IS. using getDistance for right now
+		double rightOutput = rightEncoderFollower.calculate(Robot.driveTrain.getRightWheelEncoder().get());
+		// Supposed to pass in current, cumulative position of encoder. DONT
+		// WHAT IT IS. using getDistance for right now
+		double gyroHeading = gyro.getAngle();// FIND GYRO HEADING USING
+												// GYROSCOPE
+		SmartDashboard.putNumber("getAngle", gyroHeading);
+		// SmartDashboard.putNumber("pidGet", gyro.pidGet());
+		// Assuming the gyro is giving a value in degrees
+		double desiredHeading = Pathfinder.r2d(leftEncoderFollower.getHeading()); // Should
+																					// also
+																					// be
+																					// in
+																					// degrees
+		double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
+		double turn = 3 * (-1.0 / 80.0) * angleDifference;
+		SmartDashboard.putNumber("Turn", turn);
 
-	    // Make this return true when this Command no longer needs to run execute()
-	    protected boolean isFinished() {
-	        return false;
-	    }
+		// while (Math.abs(Math.abs(leftOutput) - Math.abs(rightOutput)) >=
+		// 0.0001)
+		// {
+		// rightOutput += 0.0001;
+		// }
 
-	    // Called once after isFinished returns true
-	    protected void end() {
-	    }
+		Robot.driveTrain.rawDrive(leftOutput + turn, -rightOutput + turn);
 
-	    // Called when another command which requires one or more of the same
-	    // subsystems is scheduled to run
-	    protected void interrupted() {
-	    }
+		// System.out.println("getAngle: " + gyroHeading);
+		// System.out.println("angleDifference: " + angleDifference);
+		// System.out.println("RightWheelEncoder.get(): " +
+		// Robot.driveTrain.getRightWheelEncoder().get());
+		// System.out.println("LeftWheelEncoder.get(): " +
+		// Robot.driveTrain.getLeftWheelEncoder().get());
+		// System.out.println("turn: " + turn);
+		System.out.println("leftOutput: " + leftOutput);
+		System.out.println("rightOutput: " + rightOutput);
+		SmartDashboard.putNumber("right Encoder", Robot.driveTrain.getRightWheelEncoder().getDistance());
+		SmartDashboard.putNumber("left Encoder", Robot.driveTrain.getLeftWheelEncoder().getDistance());
+		SmartDashboard.putNumber("left value", leftOutput);
+		SmartDashboard.putNumber("right value", rightOutput);
+	}
+
+	// Make this return true when this Command no longer needs to run execute()
+	protected boolean isFinished() {
+		return false;
+	}
+
+	// Called once after isFinished returns true
+	protected void end() {
+	}
+
+	// Called when another command which requires one or more of the same
+	// subsystems is scheduled to run
+	protected void interrupted() {
+	}
 
 }
-

@@ -3,21 +3,21 @@ package org.usfirst.frc.team6000.robot;
 
 import org.usfirst.frc.team6000.robot.subsystems.DriveTrain;
 
-//import org.usfirst.frc.team6000.robot.subsystems.Shooter;
+import org.usfirst.frc.team6000.robot.subsystems.Shooter;
 import org.usfirst.frc.team6000.robot.subsystems.ImageRecognition;
 
 import com.kauailabs.navx.frc.AHRS;
 
-//import org.usfirst.frc.team6000.robot.subsystems.Indexer;
+import org.usfirst.frc.team6000.robot.subsystems.Indexer;
 import org.usfirst.frc.team6000.robot.commands.PathfinderTest;
 //import org.usfirst.frc.team6000.robot.subsystems.CameraData;
 
 //import org.usfirst.frc.team6000.robot.subsystems.Climber;
 //import org.usfirst.frc.team6000.robot.subsystems.GearGrabber;
-//import org.usfirst.frc.team6000.robot.subsystems.Intake;
+import org.usfirst.frc.team6000.robot.subsystems.Intake;
 //import org.usfirst.frc.team6000.robot.subsystems.PiplelieOne;
 
-//import org.usfirst.frc.team6000.robot.subsystems.Climber;
+import org.usfirst.frc.team6000.robot.subsystems.Climber;
 
 //import com.kauailabs.navx.frc.AHRS;
 
@@ -52,11 +52,11 @@ import org.opencv.imgproc.Imgproc;
 public class Robot extends IterativeRobot {
 
 	public static final DriveTrain driveTrain = new DriveTrain();
-//	public static final Shooter shooter = new Shooter();
-//	public static final Intake intake = new Intake();
-//	public static final Indexer indexer = new Indexer();
+	public static final Shooter shooter = new Shooter();
+	public static final Intake intake = new Intake();
+	public static final Indexer indexer = new Indexer();
 	public static OI oi;
-//	public static final ImageRecognition imgRec = new ImageRecognition();
+	public static final ImageRecognition imgRec = new ImageRecognition();
 //	public static final PiplelieOne pipeline = new PiplelieOne();
 //	public static final CameraData cmData = new CameraData();
 
@@ -64,7 +64,7 @@ public class Robot extends IterativeRobot {
     SendableChooser chooser;
     public static AHRS ahrs;
     
-//    public static UsbCamera camera; 
+    public static UsbCamera camera; 
 //	public static CvSink cvSink;
 //	public static CvSource imgOutput;
 //	public static Mat source = new Mat();
@@ -90,9 +90,9 @@ public class Robot extends IterativeRobot {
 			 DriverStation.reportError("Error instantiating navX-MXP:  " + ex.getMessage(), true);
 		}
 //    	System.out.println("HERE");
-//    	camera = CameraServer.getInstance().startAutomaticCapture();
-//    	camera.setResolution(640, 360);
-//    	
+    	camera = CameraServer.getInstance().startAutomaticCapture();
+    	camera.setResolution(640, 360);
+    	
 //    	imgOutput = CameraServer.getInstance().putVideo("testOutput", 640, 480);
     	
     }
@@ -120,29 +120,52 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = new PathfinderTest();
+//        autonomousCommand = new PathfinderTest();
         
 		String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-//		
-//		switch(autoSelected) {
-//		case "pos1":
-//			System.out.println("pos1");
-//			autonomousCommand = new PathfinderTest();
-//			break;
-//		case "pos2":
-//			System.out.println("pos2");
-////			autonomousCommand = new MyAutoCommand();
-//			break;
-//		case "pos3":
-//			System.out.println("pos3");
-////			autonomousCommand = new MyAutoCommand();
-//			break;
-//		case "default":
-//		default:
-//			System.out.println("default");
-////			autonomousCommand = new ExampleCommand();
-//			break;
-//		}
+		
+		switch(autoSelected) {
+		case "1,1":
+			System.out.println("pos1");
+			autonomousCommand = new PathfinderTest(1,1);
+			break;
+		case "1,2":
+			System.out.println("pos1");
+			autonomousCommand = new PathfinderTest(1,2);
+			break;
+		case "1,3":
+			System.out.println("pos1");
+			autonomousCommand = new PathfinderTest(1,3);
+			break;
+		case "2,1":
+			System.out.println("pos2");
+			autonomousCommand = new PathfinderTest(2,1);
+			break;
+		case "2,2":
+			System.out.println("pos2");
+			autonomousCommand = new PathfinderTest(2,2);
+			break;
+		case "2,3":
+			System.out.println("pos2");
+			autonomousCommand = new PathfinderTest(2,3);
+			break;
+		case "3,1":
+			System.out.println("pos3");
+			autonomousCommand = new PathfinderTest(3,1);
+			break;
+		case "3,2":
+			System.out.println("pos3");
+			autonomousCommand = new PathfinderTest(3,2);
+			break;
+		case "3,3":
+			System.out.println("pos3");
+			autonomousCommand = new PathfinderTest(3,3);
+			break;
+		default:
+			System.out.println("default");
+//			autonomousCommand = new PathfinderTest(1,3);
+			break;
+		}
     	
     	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
