@@ -115,7 +115,6 @@ public class PathfinderTest extends Command {
 						new Waypoint(x3/2, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
 						new Waypoint(x3, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
     			};
-    			}
     			break;
 	    	}
 	    	
