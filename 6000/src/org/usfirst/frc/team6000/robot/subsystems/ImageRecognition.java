@@ -2,7 +2,7 @@ package org.usfirst.frc.team6000.robot.subsystems;
 
 //import com.ni.vision.NIVision.Point;
 //import org.usfirst.frc.team6000.robot.subsystems.CPoint;
-//import org.usfirst.frc.team6000.robot.Robot;
+import org.usfirst.frc.team6000.robot.Robot;
 
 //import java.awt.Canvas;
 //import java.awt.Color;
@@ -42,6 +42,7 @@ import org.opencv.videoio.VideoCapture;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ImageRecognition extends Subsystem {
 
@@ -99,9 +100,9 @@ public class ImageRecognition extends Subsystem {
 		System.out.println("Angle: " + getAngle());
 		System.out.println("Distance: " + distanceFromTarget());
 		System.out.println("LengthBetweenContours: " + returnCenterX());
-		table.putNumber("distanceFromTarget", distanceFromTarget());
-		table.putNumber("angleFromGoal", getAngle());
-		table.putNumberArray("centerX", centerX);
+		SmartDashboard.putNumber("distanceFromTarget", distanceFromTarget());
+		SmartDashboard.putNumber("angleFromGoal", getAngle());
+//		SmartDashboard.putNumber("centerX", centerX);
 		videoCapture.read(matOriginal);
 		
 	}

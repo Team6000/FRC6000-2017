@@ -22,6 +22,8 @@ public class PathfinderTest extends Command {
 	int position = 0;
 	int gearPos = 0;
 	double x1, x2, x3, y1, y2, y3, a1, a2, a3;
+	double turnCo = 0;
+	double leftKp, rightKp;
 
 	public PathfinderTest(int pos, int gear) {
 		// Use requires() here to declare subsystem dependencies
@@ -50,6 +52,11 @@ public class PathfinderTest extends Command {
 	    	SmartDashboard.putNumber("y3", 0);
 	    	SmartDashboard.putNumber("a3", 0);
 	    	
+	    	SmartDashboard.putNumber("Turn Co", 0);
+	    	
+	    	SmartDashboard.putNumber("Right Kp", 0.8);
+	    	SmartDashboard.putNumber("Left Kp", 0.8);
+	    	
 	    	x1 = SmartDashboard.getNumber("x1", 0);
 	    	y1 = SmartDashboard.getNumber("y1", 0);
 	    	a1 = SmartDashboard.getNumber("a1", 0);
@@ -61,6 +68,11 @@ public class PathfinderTest extends Command {
 	    	x3 = SmartDashboard.getNumber("x3", 0);
 	    	y3 = SmartDashboard.getNumber("y3", 0);
 	    	a3 = SmartDashboard.getNumber("a3", 0);
+	    	
+	    	turnCo = SmartDashboard.getNumber("Turn Co", 0);
+	    	
+	    	rightKp = SmartDashboard.getNumber("Right Kp", 0);
+	    	leftKp = SmartDashboard.getNumber("Left Kp", 0);
 	    	
 	    	/* Create an array of Waypoints. This array is passed to the pidDrive method
 	    	 * in order to chart a route. The first two elements of a Waypoint are the x and y
@@ -77,84 +89,33 @@ public class PathfinderTest extends Command {
 	    	
 	    	switch(position){
 	    	case 1:
-	    		switch(gearPos){
-	    		case 1:
-			    	points = new Waypoint[] { 
-			    	new Waypoint(0, 0, 0),  
-					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
-			    	};
-			    	break;
-	    		case 2:
-	    			points = new Waypoint[] { 
-	    			    	new Waypoint(0, 0, 0),  
-	    					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-	    					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
-	    			    	};
-	    			break;
-	    		case 3:
-	    			points = new Waypoint[] { 
-	    			    	new Waypoint(0, 0, 0),  
-	    					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-	    					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
-	    			    	};
-	    			break;
-	    		default:
-	    			break;
-	    		}
+	    		points = new Waypoint[] { 
+				    	new Waypoint(0, 0, 0),  
+						new Waypoint(x3/2, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+						new Waypoint(x3, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+				    	};
+	    		break;
 	    	case 2:
-	    		switch(gearPos){
-	    		case 1:
-			    	points = new Waypoint[] { 
-			    	new Waypoint(0, 0, 0),  
-					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
-			    	};
-			    	break;
-	    		case 2:
-	    			points = new Waypoint[] { 
-	    			    	new Waypoint(0, 0, 0),  
-	    					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-	    					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
-	    			    	};
-	    			break;
-	    		case 3:
-	    			points = new Waypoint[] { 
-	    			    	new Waypoint(0, 0, 0),  
-	    					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-	    					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
-	    			    	};
-	    			break;
-	    		default:
-	    			break;
-	    		}
+	    		points = new Waypoint[] { 
+	    				new Waypoint(0, 0, 0),  
+						new Waypoint(x3/2, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+						new Waypoint(x3, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+				    	};
+	    		break;
 	    	case 3:
-	    		switch(gearPos){
-	    		case 1:
-			    	points = new Waypoint[] { 
-			    	new Waypoint(0, 0, 0),  
-					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
-			    	};
-			    	break;
-	    		case 2:
-	    			points = new Waypoint[] { 
-	    			    	new Waypoint(0, 0, 0),  
-	    					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-	    					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
-	    			    	};
-	    			break;
-	    		case 3:
-	    			points = new Waypoint[] { 
-	    			    	new Waypoint(0, 0, 0),  
-	    					new Waypoint(0, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
-	    					new Waypoint(0, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
-	    			    	};
-	    			break;
-	    		default:
-	    			break;
-	    		}
+	    		points = new Waypoint[] { 
+	    				new Waypoint(0, 0, 0),  
+						new Waypoint(x3/2, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+						new Waypoint(x3, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+				    	};
+	    		break;
     		default:
+    			points = new Waypoint[] {
+    					new Waypoint(0, 0, 0),  
+						new Waypoint(x3/2, 0, 0), // Waypoint @ x=-2, y=-2, exit angle=0 radians
+						new Waypoint(x3, 0, 0) // Waypoint @ x=0, y=0, exit angle=0 radians
+    			};
+    			}
     			break;
 	    	}
 	    	
@@ -189,8 +150,8 @@ public class PathfinderTest extends Command {
 					// The fourth argument is the velocity ratio. This is 1 over the maximum velocity you provided in the 
 			        //trajectory configuration (it translates m/s to a -1 to 1 scale that your motors can read)
 					// The fifth argument is your acceleration gain. Tweak this if you want to get to a higher or lower speed quicker
-					leftEncoderFollower.configurePIDVA(0.8, 0.0, 0.0, 1 / 4.27, 0);
-					rightEncoderFollower.configurePIDVA(0.8, 0.0, 0.0, 1 / 4.27, 0);
+					leftEncoderFollower.configurePIDVA(rightKp, 0.0, 0.0, 1 / 4.27, 0);
+					rightEncoderFollower.configurePIDVA(leftKp, 0.0, 0.0, 1 / 4.27, 0);
 					
 //					for (int i = 0; i < trajectory.length(); i++) {
 //					    Trajectory.Segment seg = trajectory.get(i);
@@ -221,7 +182,7 @@ public class PathfinderTest extends Command {
 																					// in
 																					// degrees
 		double angleDifference = Pathfinder.boundHalfDegrees(desiredHeading - gyroHeading);
-		double turn = 3 * (-1.0 / 80.0) * angleDifference;
+		double turn = turnCo * (-1.0 / 80.0) * angleDifference;
 		SmartDashboard.putNumber("Turn", turn);
 
 		// while (Math.abs(Math.abs(leftOutput) - Math.abs(rightOutput)) >=
